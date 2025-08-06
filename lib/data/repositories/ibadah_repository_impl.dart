@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:guardian_app/core/resources/data_state.dart';
-import 'package:guardian_app/features/ibadah/data/data_sources/ibadah_service.dart';
-import 'package:guardian_app/features/ibadah/domain/entities/salat_time_table_entity.dart';
-import 'package:guardian_app/features/ibadah/domain/repositories/ibadah_repository.dart';
+import '../../core/network/data_state.dart';
+import '../../domain/entities/salat_time_table_entity.dart';
+import '../../domain/repositories/ibadah_repository.dart';
+import '../data_sources/ibadah_service.dart';
 
 class IbadahRepositoryImpl implements IbadahRepository {
   final IbadahService _service = IbadahService();

@@ -1,14 +1,19 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ibadah/domain/use_cases/ibadah_use_case.dart';
+
+import '../../core/local/hive_service.dart';
+import '../../core/network/data_state.dart';
+import '../../domain/entities/salat_time_table_entity.dart';
 
 part 'ibadah_event.dart';
 
 part 'ibadah_state.dart';
 
 class IbadahBloc extends Bloc<IbadahEvent, IbadahState> {
-  final IbadahUseCase useCase;
+  final IbadahUseCase useCase = IbadahUseCase();
 
-  IbadahBloc({required this.useCase}) : super(IbadahInitial()) {
+  IbadahBloc() : super(IbadahInitial()) {
     on<FetchSalatTime>(onFetchSalatTime);
   }
 

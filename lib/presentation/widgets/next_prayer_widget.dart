@@ -1,0 +1,139 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter_ibadah/core/utils/common_utils.dart';
+import 'package:flutter_ibadah/domain/entities/salat_time_table_entity.dart';
+
+class NextPrayerWidget extends StatefulWidget {
+  final SalatTimeTableEntity salatTimes;
+
+  const NextPrayerWidget({
+    super.key,
+    required this.salatTimes,
+  });
+
+  @override
+  State<NextPrayerWidget> createState() => _NextPrayerWidgetState();
+}
+
+class _NextPrayerWidgetState extends State<NextPrayerWidget> {
+  late Timer _timer;
+  String _nextPrayerName = '';
+  DateTime? _nextPrayerTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      _updateNextPrayer();
+    });
+  }
+
+  void _updateNextPrayer() {
+    final now = DateTime.now();
+
+    final prayerTimes = {
+      'Fajr': widget.salatTimes.fajr,
+      'Dhuhr': widget.salatTimes.dhuhr,
+      'Asr': widget.salatTimes.asr,
+      'Maghrib': widget.salatTimes.maghrib,
+      'Isha': widget.salatTimes.isha,
+    };
+
+    final upcoming = prayerTimes.entries
+        .where((entry) => entry.value?.isAfter(now) ?? false)
+        .toList()
+      ..sort((a, b) => a.value!.compareTo(b.value!));
+
+    if (upcoming.isNotEmpty) {
+      setState(() {
+        _nextPrayerName = upcoming.first.key;
+        _nextPrayerTime = upcoming.first.value;
+      });
+    } else {
+      setState(() {
+        _nextPrayerName = 'Fajr (next day)';
+        _nextPrayerTime = widget.salatTimes.fajr?.add(const Duration(days: 1));
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  _getNextPrayerName(String name, BuildContext context) {
+    return name;
+    // //CommonUtils.debugLog("Name -> $name");
+    // if (name == "Fajr") {
+    //   return AppLocalizations.of(context)?.fajr ?? "Fajr";
+    // } else if (name == "Dhuhr") {
+    //   return AppLocalizations.of(context)?.dhuhr ?? "Dhuhr";
+    // } else if (name == "Asr") {
+    //   return AppLocalizations.of(context)?.asr ?? "Asr";
+    // } else if (name == "Maghrib") {
+    //   return AppLocalizations.of(context)?.maghrib ?? "Maghrib";
+    // } else if (name == "Isha") {
+    //   return AppLocalizations.of(context)?.isha ?? "Isha";
+    // }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _nextPrayerTime == null
+        ? Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Something went wrong")
+              ],
+            ),
+          )
+        : Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '${"Upcoming"}: ${_getNextPrayerName(_nextPrayerName, context) ?? "--"}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '( ${CommonUtils.formatNumber(
+                      CommonUtils.formatTimeDefault(_nextPrayerTime),
+                      locale: 'en',
+                    )} )',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '${"Start in"}: ${CommonUtils.formatNumber(
+                  _formatDuration(_nextPrayerTime?.difference(DateTime.now()) ??
+                      const Duration(seconds: 0)),
+                  locale: 'en',
+                )}',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(color: Colors.grey[500]),
+              ),
+            ],
+          );
+  }
+
+  String _formatDuration(Duration duration) {
+    final hours = duration.inHours.toString().padLeft(2, '0');
+    final minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
+    final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return '$hours:$minutes:$seconds';
+  }
+}

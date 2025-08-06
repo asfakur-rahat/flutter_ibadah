@@ -3,13 +3,13 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:guardian_app/app_config.dart';
-import 'package:guardian_app/core/network/links/links.dart';
-import 'package:guardian_app/core/resources/device_info_service.dart';
-import 'package:guardian_app/core/resources/secure_storage.dart';
+import '../../data/utils/ibadah_links.dart';
+import 'data_state.dart'; // Replace with actual path if needed
 
-import '../../resources/data_state.dart';
-import '../../resources/global_variables/global_variables.dart';
+class AppConfig {
+  static final shared = AppConfig();
+  final String baseUrl = IbadahLinks.instance.baseUrl; // Replace with actual base URL
+}
 
 class DioService {
   static final DioService _instance = DioService._();
@@ -23,8 +23,6 @@ class DioService {
   DioService._() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: AppConfig.shared.baseUrl,
-        // todo: change when needed
         connectTimeout: const Duration(milliseconds: 30000),
         receiveTimeout: const Duration(milliseconds: 30000),
       ),
@@ -33,9 +31,6 @@ class DioService {
     ///Add interceptors
     _dio.interceptors.addAll(
       [
-        _headerInterceptor(),
-        _authInterceptor(),
-        _refreshTokenInterceptor(),
         _errorInterceptor(),
         _loggingInterceptor(),
         _flavorInterceptor(),
@@ -60,117 +55,6 @@ class DioService {
     return connected;
   }
 
-  ///Auth interceptor
-  Interceptor _authInterceptor() {
-    return InterceptorsWrapper(
-      onRequest: (
-        RequestOptions options,
-        RequestInterceptorHandler handler,
-      ) async {
-        String? accessToken = await SecureStorage().getAccessToken();
-        _debugLog("access token: $accessToken");
-        if (accessToken != null) {
-          options.headers["Authorization"] = 'Bearer $accessToken';
-        }
-        return handler.next(options);
-      },
-    );
-  }
-
-  ///header interceptor
-  Interceptor _headerInterceptor() {
-    return InterceptorsWrapper(
-      onRequest: (
-        RequestOptions options,
-        RequestInterceptorHandler handler,
-      ) async {
-        String? deviceId = await DeviceInfoService.instance.getDeviceId();
-        _debugLog("deviceId: $deviceId");
-        if (deviceId != null) {
-          options.headers["ClientId"] = deviceId;
-        }
-        return handler.next(options);
-      },
-    );
-  }
-
-  ///Refresh interceptor
-  Interceptor _refreshTokenInterceptor() {
-    return InterceptorsWrapper(
-      onError: (DioException exception, ErrorInterceptorHandler handler) async {
-        if (exception.response?.statusCode == 401) {
-          final String? refreshToken = await SecureStorage().getRefreshToken();
-          final String? expiryTime = await SecureStorage().getExpiryTime();
-          DateTime? convertedExpiryTime;
-          if (expiryTime != null) {
-            convertedExpiryTime = DateTime.parse(expiryTime);
-          }
-          if (DateTime.now().isBefore(convertedExpiryTime ?? DateTime.now())) {
-            if (refreshToken != null && expiryTime != null) {
-              try {
-                final response = await _dio.post(
-                  '${AppConfig.shared.baseUrl}${Links().refreshTokenUrl}',
-                  data: {'refreshToken': refreshToken},
-                );
-
-                String newAccessToken = response.data["token"];
-                String newRefreshToken = response.data["refreshToken"];
-                String refreshTokenExpiryTime =
-                    response.data["refreshTokenExpiryTime"];
-                await Future.wait([
-                  SecureStorage().saveAccessToken(newAccessToken),
-                  SecureStorage().saveRefreshToken(newRefreshToken),
-                  SecureStorage().saveExpiryTime(refreshTokenExpiryTime),
-                ]);
-
-                ///Retry the original request with the new access token
-                final options = exception.requestOptions;
-                options.headers['Authorization'] = 'Bearer $newAccessToken';
-                final cloneReq = await _dio.request(
-                  options.path,
-                  data: options.data,
-                  queryParameters: options.queryParameters,
-                  options: Options(
-                    method: options.method,
-                    headers: options.headers,
-                  ),
-                );
-
-                return handler.resolve(cloneReq);
-              } on DioException catch (e) {
-                if (e.response?.statusCode == 400) {
-                  final errorData = e.response?.data;
-                  if (errorData != null &&
-                      errorData['detail'] ==
-                          'Invalid or expired refresh token') {
-                    _handleRefreshTokenExpired();
-                  }
-                }
-                debugPrint(e.toString());
-                return handler.next(exception);
-              } catch (e, s) {
-                if (e is DioException && e.response?.statusCode == 400) {
-                  final errorData = e.response?.data;
-                  if (errorData != null &&
-                      errorData['detail'] ==
-                          'Invalid or expired refresh token') {
-                    _handleRefreshTokenExpired();
-                  }
-                }
-                debugPrint(e.toString());
-                debugPrint(s.toString());
-                return handler.next(exception);
-              }
-            }
-          } else {
-            _handleRefreshTokenExpired();
-          }
-        }
-        return handler.next(exception);
-      },
-    );
-  }
-
   ///Error handling interceptor
   Interceptor _errorInterceptor() {
     return InterceptorsWrapper(
@@ -185,7 +69,6 @@ class DioService {
               final errorData = exception.response?.data;
               if (errorData != null &&
                   errorData['detail'] == 'Invalid or expired refresh token') {
-                _handleRefreshTokenExpired();
               }
               _debugLog("Bad Request");
               break;
@@ -235,12 +118,6 @@ class DioService {
   ///Flavor specific interceptor
   Interceptor _flavorInterceptor() {
     return InterceptorsWrapper();
-  }
-
-  void _handleRefreshTokenExpired() async {
-    await SecureStorage().clearTokens();
-
-    appLogoutNotifier.value = true;
   }
 
   String getErrorMessage(DioException e) {

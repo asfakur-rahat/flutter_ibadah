@@ -1,4 +1,4 @@
-import 'package:guardian_app/features/ibadah/domain/entities/salat_time_table_entity.dart';
+import '../../domain/entities/salat_time_table_entity.dart';
 
 class SalatTimeTableModel {
   final DateTime fajr;

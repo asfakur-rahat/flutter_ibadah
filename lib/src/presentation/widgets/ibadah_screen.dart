@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ibadah/src/core/local/hive_service.dart';
+import 'package:flutter_ibadah/src/core/utils/common_utils.dart';
 import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
 import 'package:flutter_ibadah/src/presentation/bloc/ibadah_bloc.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/salah_time_widget.dart';
@@ -16,7 +17,7 @@ class IbadahScreen extends StatefulWidget {
   State<IbadahScreen> createState() => _IbadahScreenState();
 }
 
-class _IbadahScreenState extends State<IbadahScreen> {
+class _IbadahScreenState extends State<IbadahScreen> with TickerProviderStateMixin {
   //late Alerts _alerts;
   late Timer _timer;
   final IbadahBloc _ibadahBloc = IbadahBloc();
@@ -29,7 +30,8 @@ class _IbadahScreenState extends State<IbadahScreen> {
   @override
   void initState() {
     super.initState();
-    //_alerts = Alerts(context: context);
+    CommonUtils.debugLog('Inside ibadah screen initstate');
+    HiveService.instance.init();
     _initSalatTime();
     _timer = Timer.periodic(const Duration(minutes: 30), (_) {
       periodicRefresh.value = !periodicRefresh.value;
@@ -164,27 +166,32 @@ class _IbadahScreenState extends State<IbadahScreen> {
                         // mainAxisSize: MainAxisSize.min,
                         children: [
                           SalahTimeWidget(
-                            iconPath: 'assets/icons/sunrise.svg',
+                            key: const ValueKey("fajr"),
+                            iconPath: 'assets/icons/ic_sunrise.svg',
                             title: "Fajr",
                             startTime: timeTable.fajr,
                           ),
                           SalahTimeWidget(
-                            iconPath: 'assets/icons/noon.svg',
+                            key: const ValueKey("dhuhr"),
+                            iconPath: 'assets/icons/ic_noon.svg',
                             title: "Dhuhr",
                             startTime: timeTable.dhuhr,
                           ),
                           SalahTimeWidget(
-                            iconPath: 'assets/icons/noon.svg',
+                            key: const ValueKey("asr"),
+                            iconPath: 'assets/icons/ic_noon.svg',
                             title: "Asr",
                             startTime: timeTable.asr,
                           ),
                           SalahTimeWidget(
-                            iconPath: 'assets/icons/sunset.svg',
+                            key: const ValueKey("maghrib"),
+                            iconPath: 'assets/icons/ic_sunset.svg',
                             title: "Maghrib",
                             startTime: timeTable.maghrib,
                           ),
                           SalahTimeWidget(
-                            iconPath: 'assets/icons/night.svg',
+                            key: const ValueKey("isha"),
+                            iconPath: 'assets/icons/ic_night.svg',
                             title: "Isha",
                             startTime: timeTable.isha,
                           ),

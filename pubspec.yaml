@@ -1,0 +1,64 @@
+name: flutter_ibadah
+description: "A new Flutter package for showing bangladeshs salah time."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ^3.8.1
+  flutter: ">=3.24.1"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  dio: ^5.8.0
+  flutter_svg: ^2.1.0
+  flutter_bloc: ^9.1.1
+  equatable: ^2.0.7
+  hive_flutter: ^1.1.0
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  # To add assets to your package, add an assets section, like this:
+  assets:
+    - assets/icons/
+
+  # To add custom fonts to your package, add a fonts section here,
+  # in this format:
+  fonts:
+    - family: Satoshi
+      fonts:
+        - asset: assets/fonts/satoshi/Satoshi-Black.ttf
+          weight: 900
+        - asset: assets/fonts/satoshi/Satoshi-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/satoshi/Satoshi-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/satoshi/Satoshi-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/satoshi/Satoshi-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/satoshi/Satoshi-Light.ttf
+          weight: 300
+        - asset: assets/fonts/satoshi/Satoshi-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/satoshi/Satoshi-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/satoshi/Satoshi-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/satoshi/Satoshi-Regular.ttf
+          weight: 400

@@ -31,11 +31,15 @@ class _IbadahScreenState extends State<IbadahScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
     CommonUtils.debugLog('Inside ibadah screen initstate');
-    HiveService.instance.init();
-    _initSalatTime();
+    _initHive();
     _timer = Timer.periodic(const Duration(minutes: 30), (_) {
       periodicRefresh.value = !periodicRefresh.value;
     });
+  }
+
+  void _initHive() async {
+    HiveService.instance.init();
+    _initSalatTime();
   }
 
   void _initSalatTime() {

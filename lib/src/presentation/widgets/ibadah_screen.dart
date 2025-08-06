@@ -72,6 +72,7 @@ class _IbadahScreenState extends State<IbadahScreen> with TickerProviderStateMix
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 16, left: 16, right: 16),

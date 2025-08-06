@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_ibadah/domain/use_cases/ibadah_use_case.dart';
+import 'package:flutter_ibadah/src/domain/use_cases/ibadah_use_case.dart';
 
 import '../../core/local/hive_service.dart';
 import '../../core/network/data_state.dart';

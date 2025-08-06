@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ibadah/presentation/widgets/med_easy_searchbar.dart';
+import 'package:flutter_ibadah/src/presentation/widgets/med_easy_searchbar.dart';
 
 class DistrictSelectionBottomSheet extends StatefulWidget {
   final Function(String)? onSelect;

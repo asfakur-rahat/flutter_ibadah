@@ -1,8 +1,9 @@
-import 'package:flutter_ibadah/core/network/data_state.dart';
-import 'package:flutter_ibadah/core/network/dio_service.dart';
-import 'package:flutter_ibadah/core/utils/common_utils.dart';
-import 'package:flutter_ibadah/data/models/salat_time_table_model.dart';
-import 'package:flutter_ibadah/data/utils/ibadah_links.dart';
+import 'package:flutter_ibadah/src/core/network/data_state.dart';
+import 'package:flutter_ibadah/src/core/network/dio_service.dart';
+import 'package:flutter_ibadah/src/data/models/salat_time_table_model.dart';
+import 'package:flutter_ibadah/src/data/utils/ibadah_links.dart';
+
+import '../../core/utils/common_utils.dart';
 
 class IbadahService {
   final DioService _dioService = DioService();

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_ibadah/core/utils/common_utils.dart';
-import 'package:flutter_ibadah/domain/entities/salat_time_table_entity.dart';
+import 'package:flutter_ibadah/src/core/utils/common_utils.dart';
+import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
 
 class NextPrayerWidget extends StatefulWidget {
   final SalatTimeTableEntity salatTimes;

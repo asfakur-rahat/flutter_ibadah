@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ibadah/core/utils/svg_color_mapper.dart';
+import 'package:flutter_ibadah/src/core/utils/svg_color_mapper.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/utils/common_utils.dart';
 

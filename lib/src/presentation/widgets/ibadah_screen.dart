@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_ibadah/core/local/hive_service.dart';
-import 'package:flutter_ibadah/domain/entities/salat_time_table_entity.dart';
-import 'package:flutter_ibadah/presentation/bloc/ibadah_bloc.dart';
-import 'package:flutter_ibadah/presentation/widgets/salah_time_widget.dart';
+import 'package:flutter_ibadah/src/core/local/hive_service.dart';
+import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
+import 'package:flutter_ibadah/src/presentation/bloc/ibadah_bloc.dart';
+import 'package:flutter_ibadah/src/presentation/widgets/salah_time_widget.dart';
 import 'package:flutter_svg/svg.dart';
 import 'next_prayer_widget.dart';
 

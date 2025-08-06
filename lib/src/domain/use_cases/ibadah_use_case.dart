@@ -1,7 +1,8 @@
-import 'package:flutter_ibadah/core/network/data_state.dart';
-import 'package:flutter_ibadah/data/repositories/ibadah_repository_impl.dart';
-import 'package:flutter_ibadah/domain/entities/salat_time_table_entity.dart';
-import 'package:flutter_ibadah/domain/repositories/ibadah_repository.dart';
+import 'package:flutter_ibadah/src/core/network/data_state.dart';
+import 'package:flutter_ibadah/src/data/repositories/ibadah_repository_impl.dart';
+import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
+
+import '../repositories/ibadah_repository.dart';
 
 class IbadahUseCase {
   final IbadahRepository repository =

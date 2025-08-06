@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_ibadah/src/domain/repositories/ibadah_repository.dart';
 import '../../core/network/data_state.dart';
 import '../../domain/entities/salat_time_table_entity.dart';
-import '../../domain/repositories/ibadah_repository.dart';
 import '../data_sources/ibadah_service.dart';
 
 class IbadahRepositoryImpl implements IbadahRepository {

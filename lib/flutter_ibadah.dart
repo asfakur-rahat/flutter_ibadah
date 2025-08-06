@@ -1,4 +1,2 @@
-library;
-
-export 'package:flutter_ibadah/presentation/widgets/ibadah_screen.dart';
+export 'package:flutter_ibadah/src/presentation/widgets/ibadah_screen.dart';
 

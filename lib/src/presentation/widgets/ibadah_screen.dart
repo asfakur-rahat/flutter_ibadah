@@ -8,6 +8,7 @@ import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart'
 import 'package:flutter_ibadah/src/presentation/bloc/ibadah_bloc.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/salah_time_widget.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'next_prayer_widget.dart';
 
 class IbadahScreen extends StatefulWidget {
@@ -38,7 +39,8 @@ class _IbadahScreenState extends State<IbadahScreen> with TickerProviderStateMix
   }
 
   void _initHive() async {
-    HiveService.instance.init();
+    await Hive.initFlutter();
+    await HiveService.instance.init();
     _initSalatTime();
   }
 

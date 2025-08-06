@@ -31,7 +31,7 @@ class SalahTimeWidget extends StatelessWidget {
               border: Border.all(
                 color:
                     _isActive(startTime)
-                        ? Theme.of(context).dividerColor
+                        ? Theme.of(context).colorScheme.onSurface.withValues(alpha: .5)
                         : Colors.grey,
                 width: _isActive(startTime) ? 2.5 : 0.5,
               ),

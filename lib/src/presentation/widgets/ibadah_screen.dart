@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,9 +7,11 @@ import 'package:flutter_ibadah/src/core/local/hive_service.dart';
 import 'package:flutter_ibadah/src/core/utils/common_utils.dart';
 import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
 import 'package:flutter_ibadah/src/presentation/bloc/ibadah_bloc.dart';
+import 'package:flutter_ibadah/src/presentation/widgets/district_selection_bottom_sheet.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/salah_time_widget.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_flutter/adapters.dart';
+
 import 'next_prayer_widget.dart';
 
 class IbadahScreen extends StatefulWidget {
@@ -18,7 +21,8 @@ class IbadahScreen extends StatefulWidget {
   State<IbadahScreen> createState() => _IbadahScreenState();
 }
 
-class _IbadahScreenState extends State<IbadahScreen> with TickerProviderStateMixin {
+class _IbadahScreenState extends State<IbadahScreen>
+    with TickerProviderStateMixin {
   //late Alerts _alerts;
   late Timer _timer;
   final IbadahBloc _ibadahBloc = IbadahBloc();
@@ -66,9 +70,13 @@ class _IbadahScreenState extends State<IbadahScreen> with TickerProviderStateMix
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
+          color: Theme.of(context).colorScheme.onPrimary,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Theme.of(context).dividerColor),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.onSurface.withValues(
+                  alpha: .5,
+                ),
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,6 +101,81 @@ class _IbadahScreenState extends State<IbadahScreen> with TickerProviderStateMix
                   ),
                   GestureDetector(
                     onTap: () {
+                      showModalBottomSheet(context: context,
+                        backgroundColor: Theme.of(context).colorScheme.surface,
+                        barrierColor: const Color(0x1A1925A6),
+                        enableDrag: true,
+                        isDismissible: true,
+                        isScrollControlled: true,
+                        builder: (context) => GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          child: PopScope(
+                            canPop: true,
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(
+                                sigmaX: 14,
+                                sigmaY: 14,
+                              ),
+                              child: SafeArea(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      height: 36,
+                                      width: MediaQuery.sizeOf(context).width,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).colorScheme.surface,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(24),
+                                            topRight: Radius.circular(24),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: SizedBox(
+                                            height: 6,
+                                            width: 36,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: .4),
+                                                borderRadius: BorderRadius.circular(
+                                                  20,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: ColoredBox(
+                                        color: Theme.of(context).colorScheme.surface,
+                                        child: DistrictSelectionBottomSheet(
+                                          onSelect: (district) {
+                                            selectedDistrict.value = district;
+                                            if (district != _ibadahBloc.selectedDistrict) {
+                                              _ibadahBloc.add(
+                                                FetchSalatTime(district: district),
+                                              );
+                                            }
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 24,
+                                      width: double.infinity,
+                                      child: Container(
+                                        color: Theme.of(context).colorScheme.onSurface,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),);
                       // _alerts.openBottomSheet(
                       //   isDismissible: false,
                       //   child: DistrictSelectionBottomSheet(
@@ -112,7 +195,10 @@ class _IbadahScreenState extends State<IbadahScreen> with TickerProviderStateMix
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: Theme.of(context).dividerColor,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: .5),
                         ),
                       ),
                       child: Padding(

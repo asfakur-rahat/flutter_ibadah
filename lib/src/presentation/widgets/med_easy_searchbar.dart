@@ -34,7 +34,7 @@ class MedEasySearchbar extends StatelessWidget {
         child: CupertinoSearchTextField(
           // focusNode: node,
           style: theme.textTheme.bodyMedium,
-          itemColor: theme.hintColor,
+          itemColor: theme.colorScheme.onSurface,
           prefixInsets: const EdgeInsetsDirectional.fromSTEB(
             16,
             12,
@@ -47,9 +47,9 @@ class MedEasySearchbar extends StatelessWidget {
           onSubmitted: onQuerySubmit,
           onTap: onTap,
           decoration: BoxDecoration(
-            color: theme.scaffoldBackgroundColor,
+            color: Colors.transparent,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: theme.dividerColor),
+            border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: .5)),
           ),
           padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 16, 12),
         ),

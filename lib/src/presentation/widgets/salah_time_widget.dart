@@ -45,6 +45,7 @@ class SalahTimeWidget extends StatelessWidget {
                 child: SvgPicture(
                   SvgAssetLoader(
                     iconPath,
+                    packageName: 'flutter_ibadah',
                     colorMapper: SvgColorMapper(
                       toColor:
                           _isActive(startTime)

@@ -15,7 +15,7 @@ class MedEasySearchbar extends StatelessWidget {
   const MedEasySearchbar({
     required this.ibadahTheme,
     super.key,
-    this.hintText = 'Search medicine',
+    this.hintText = 'Search district',
     this.onSearchQueryChanged,
     this.horizontalPadding = 24,
     this.topPadding = 24,
@@ -44,6 +44,7 @@ class MedEasySearchbar extends StatelessWidget {
             12,
           ),
           suffixMode: OverlayVisibilityMode.never,
+          prefixIcon: Icon(Icons.search_rounded),
           placeholder: hintText,
           onChanged: onSearchQueryChanged,
           onSubmitted: onQuerySubmit,

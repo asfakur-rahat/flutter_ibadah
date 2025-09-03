@@ -25,6 +25,7 @@ class _DistrictSelectionBottomSheetState
   Widget build(BuildContext context) {
     return SizedBox(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           MedEasySearchbar(
             ibadahTheme: widget.ibadahTheme,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ibadah/src/core/local/hive_service.dart';
 import 'package:flutter_ibadah/src/core/utils/common_utils.dart';
+import 'package:flutter_ibadah/src/core/utils/svg_color_mapper.dart';
 import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
 import 'package:flutter_ibadah/src/presentation/bloc/ibadah_bloc.dart';
 import 'package:flutter_ibadah/src/presentation/core/ibadah_theme.dart';
@@ -98,6 +99,9 @@ class _IbadahScreenState extends State<IbadahScreen>
                         "assets/icons/ic_mosque.svg",
                         height: 24,
                         package: 'flutter_ibadah',
+                        colorMapper: SvgColorMapper(
+                          toColor: widget.ibadahTheme.primaryColor,
+                        ),
                       ),
                       const SizedBox(width: 8),
                       Text(

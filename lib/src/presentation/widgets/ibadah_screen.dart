@@ -94,7 +94,11 @@ class _IbadahScreenState extends State<IbadahScreen>
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SvgPicture.asset("assets/icons/mosque.svg", height: 24),
+                      SvgPicture.asset(
+                        "assets/icons/ic_mosque.svg",
+                        height: 24,
+                        package: 'flutter_ibadah',
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         "Ibadah",

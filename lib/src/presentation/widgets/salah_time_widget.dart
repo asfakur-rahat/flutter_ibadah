@@ -36,7 +36,7 @@ class SalahTimeWidget extends StatelessWidget {
                     _isActive(startTime)
                         ? ibadahTheme.foregroundOnBackground
                         : ibadahTheme.border,
-                width: _isActive(startTime) ? 2.5 : 0.5,
+                width: _isActive(startTime) ? 1.5 : 0.5,
               ),
             ),
             child: Padding(

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../core/ibadah_theme.dart';
+
 class MedEasySearchbar extends StatelessWidget {
   final String hintText;
   final double horizontalPadding;
@@ -8,8 +10,10 @@ class MedEasySearchbar extends StatelessWidget {
   final Function(String)? onSearchQueryChanged;
   final Function(String)? onQuerySubmit;
   final Function()? onTap;
+  final IbadahTheme ibadahTheme;
 
   const MedEasySearchbar({
+    required this.ibadahTheme,
     super.key,
     this.hintText = 'Search medicine',
     this.onSearchQueryChanged,
@@ -22,7 +26,6 @@ class MedEasySearchbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // final node = FocusNode();
     return SizedBox(
       width: double.infinity,
       child: Padding(
@@ -32,9 +35,8 @@ class MedEasySearchbar extends StatelessWidget {
           right: horizontalPadding,
         ),
         child: CupertinoSearchTextField(
-          // focusNode: node,
           style: theme.textTheme.bodyMedium,
-          itemColor: theme.colorScheme.onSurface,
+          itemColor: ibadahTheme.foregroundOnBackground,
           prefixInsets: const EdgeInsetsDirectional.fromSTEB(
             16,
             12,
@@ -49,7 +51,7 @@ class MedEasySearchbar extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: .5)),
+            border: Border.all(color: ibadahTheme.border),
           ),
           padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 16, 12),
         ),

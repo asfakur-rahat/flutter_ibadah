@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/med_easy_searchbar.dart';
+import '../core/ibadah_theme.dart';
 
 class DistrictSelectionBottomSheet extends StatefulWidget {
   final Function(String)? onSelect;
+  final IbadahTheme ibadahTheme;
 
   const DistrictSelectionBottomSheet({
     super.key,
     this.onSelect,
+    required this.ibadahTheme,
   });
 
   @override
@@ -24,6 +27,7 @@ class _DistrictSelectionBottomSheetState
       child: Column(
         children: [
           MedEasySearchbar(
+            ibadahTheme: widget.ibadahTheme,
             hintText: "Search...",
             horizontalPadding: 16,
             topPadding: 8,

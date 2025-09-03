@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ibadah/src/core/utils/svg_color_mapper.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/utils/common_utils.dart';
+import '../core/ibadah_theme.dart';
 
 class SalahTimeWidget extends StatelessWidget {
   final String iconPath;
   final String title;
   final DateTime? startTime;
+  final IbadahTheme ibadahTheme;
 
   const SalahTimeWidget({
     super.key,
     required this.iconPath,
     required this.title,
     required this.startTime,
+    required this.ibadahTheme,
   });
 
   bool _isActive(DateTime? time) {
@@ -31,8 +34,8 @@ class SalahTimeWidget extends StatelessWidget {
               border: Border.all(
                 color:
                     _isActive(startTime)
-                        ? Theme.of(context).colorScheme.onSurface.withValues(alpha: .5)
-                        : Colors.grey,
+                        ? ibadahTheme.foregroundOnBackground
+                        : ibadahTheme.border,
                 width: _isActive(startTime) ? 2.5 : 0.5,
               ),
             ),
@@ -45,8 +48,8 @@ class SalahTimeWidget extends StatelessWidget {
                     colorMapper: SvgColorMapper(
                       toColor:
                           _isActive(startTime)
-                              ? Theme.of(context).colorScheme.onSurface
-                              : Colors.grey,
+                              ? ibadahTheme.foregroundOnBackground
+                              : ibadahTheme.border,
                     ),
                   ),
                   height: 30,
@@ -61,8 +64,8 @@ class SalahTimeWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               color:
                   _isActive(startTime)
-                      ? Theme.of(context).colorScheme.onSurface
-                      : Colors.grey,
+                      ? ibadahTheme.foregroundOnBackground
+                      : ibadahTheme.border,
               fontSize: CommonUtils.getSp(14, context),
             ),
           ),
@@ -75,8 +78,8 @@ class SalahTimeWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               color:
                   _isActive(startTime)
-                      ? Theme.of(context).colorScheme.onSurface
-                      : Colors.grey,
+                      ? ibadahTheme.foregroundOnBackground
+                      : ibadahTheme.border,
               fontSize: CommonUtils.getSp(14, context),
             ),
           ),

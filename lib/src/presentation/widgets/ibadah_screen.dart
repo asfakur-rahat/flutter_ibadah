@@ -7,6 +7,7 @@ import 'package:flutter_ibadah/src/core/local/hive_service.dart';
 import 'package:flutter_ibadah/src/core/utils/common_utils.dart';
 import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
 import 'package:flutter_ibadah/src/presentation/bloc/ibadah_bloc.dart';
+import 'package:flutter_ibadah/src/presentation/core/ibadah_theme.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/district_selection_bottom_sheet.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/salah_time_widget.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,8 +15,12 @@ import 'package:hive_flutter/adapters.dart';
 
 import 'next_prayer_widget.dart';
 
+export 'package:flutter_ibadah/src/presentation/core/ibadah_theme.dart';
+
 class IbadahScreen extends StatefulWidget {
-  const IbadahScreen({super.key});
+  const IbadahScreen({super.key, required this.ibadahTheme});
+
+  final IbadahTheme ibadahTheme;
 
   @override
   State<IbadahScreen> createState() => _IbadahScreenState();
@@ -70,12 +75,10 @@ class _IbadahScreenState extends State<IbadahScreen>
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: widget.ibadahTheme.foregroundOnPrimary,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: Theme.of(context).colorScheme.onSurface.withValues(
-                  alpha: .5,
-                ),
+            color: widget.ibadahTheme.border,
           ),
         ),
         child: Column(
@@ -101,8 +104,9 @@ class _IbadahScreenState extends State<IbadahScreen>
                   ),
                   GestureDetector(
                     onTap: () {
-                      showModalBottomSheet(context: context,
-                        backgroundColor: Theme.of(context).colorScheme.surface,
+                      showModalBottomSheet(
+                        context: context,
+                        backgroundColor: widget.ibadahTheme.foregroundOnPrimary,
                         barrierColor: const Color(0x1A1925A6),
                         enableDrag: true,
                         isDismissible: true,
@@ -125,7 +129,8 @@ class _IbadahScreenState extends State<IbadahScreen>
                                       width: MediaQuery.sizeOf(context).width,
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          color: Theme.of(context).colorScheme.surface,
+                                          color: widget
+                                              .ibadahTheme.foregroundOnPrimary,
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(24),
                                             topRight: Radius.circular(24),
@@ -137,8 +142,10 @@ class _IbadahScreenState extends State<IbadahScreen>
                                             width: 36,
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: .4),
-                                                borderRadius: BorderRadius.circular(
+                                                color:
+                                                    widget.ibadahTheme.border,
+                                                borderRadius:
+                                                    BorderRadius.circular(
                                                   20,
                                                 ),
                                               ),
@@ -149,13 +156,17 @@ class _IbadahScreenState extends State<IbadahScreen>
                                     ),
                                     Flexible(
                                       child: ColoredBox(
-                                        color: Theme.of(context).colorScheme.surface,
+                                        color: widget
+                                            .ibadahTheme.foregroundOnPrimary,
                                         child: DistrictSelectionBottomSheet(
+                                          ibadahTheme: widget.ibadahTheme,
                                           onSelect: (district) {
                                             selectedDistrict.value = district;
-                                            if (district != _ibadahBloc.selectedDistrict) {
+                                            if (district !=
+                                                _ibadahBloc.selectedDistrict) {
                                               _ibadahBloc.add(
-                                                FetchSalatTime(district: district),
+                                                FetchSalatTime(
+                                                    district: district),
                                               );
                                             }
                                             Navigator.of(context).pop();
@@ -167,7 +178,8 @@ class _IbadahScreenState extends State<IbadahScreen>
                                       height: 24,
                                       width: double.infinity,
                                       child: Container(
-                                        color: Theme.of(context).colorScheme.onSurface,
+                                        color: widget
+                                            .ibadahTheme.foregroundOnPrimary,
                                       ),
                                     ),
                                   ],
@@ -175,21 +187,8 @@ class _IbadahScreenState extends State<IbadahScreen>
                               ),
                             ),
                           ),
-                        ),);
-                      // _alerts.openBottomSheet(
-                      //   isDismissible: false,
-                      //   child: DistrictSelectionBottomSheet(
-                      //     onSelect: (district) {
-                      //       selectedDistrict.value = district;
-                      //       if (district != _ibadahBloc.selectedDistrict) {
-                      //         _ibadahBloc.add(
-                      //           FetchSalatTime(district: district),
-                      //         );
-                      //       }
-                      //       _alerts.dismissDialog();
-                      //     },
-                      //   ),
-                      // );
+                        ),
+                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -238,7 +237,12 @@ class _IbadahScreenState extends State<IbadahScreen>
             ValueListenableBuilder(
               valueListenable: salatTimeEntity,
               builder: (_, timeTable, __) {
-                return Center(child: NextPrayerWidget(salatTimes: timeTable));
+                return Center(
+                  child: NextPrayerWidget(
+                    salatTimes: timeTable,
+                    ibadahTheme: widget.ibadahTheme,
+                  ),
+                );
               },
             ),
             const Divider(height: 20),
@@ -260,30 +264,35 @@ class _IbadahScreenState extends State<IbadahScreen>
                         children: [
                           SalahTimeWidget(
                             key: const ValueKey("fajr"),
+                            ibadahTheme: widget.ibadahTheme,
                             iconPath: 'assets/icons/ic_sunrise.svg',
                             title: "Fajr",
                             startTime: timeTable.fajr,
                           ),
                           SalahTimeWidget(
                             key: const ValueKey("dhuhr"),
+                            ibadahTheme: widget.ibadahTheme,
                             iconPath: 'assets/icons/ic_noon.svg',
                             title: "Dhuhr",
                             startTime: timeTable.dhuhr,
                           ),
                           SalahTimeWidget(
                             key: const ValueKey("asr"),
+                            ibadahTheme: widget.ibadahTheme,
                             iconPath: 'assets/icons/ic_noon.svg',
                             title: "Asr",
                             startTime: timeTable.asr,
                           ),
                           SalahTimeWidget(
                             key: const ValueKey("maghrib"),
+                            ibadahTheme: widget.ibadahTheme,
                             iconPath: 'assets/icons/ic_sunset.svg',
                             title: "Maghrib",
                             startTime: timeTable.maghrib,
                           ),
                           SalahTimeWidget(
                             key: const ValueKey("isha"),
+                            ibadahTheme: widget.ibadahTheme,
                             iconPath: 'assets/icons/ic_night.svg',
                             title: "Isha",
                             startTime: timeTable.isha,

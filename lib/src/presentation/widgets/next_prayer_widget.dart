@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ibadah/src/core/utils/common_utils.dart';
 import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
 
+import '../core/ibadah_theme.dart';
+
 class NextPrayerWidget extends StatefulWidget {
   final SalatTimeTableEntity salatTimes;
+  final IbadahTheme ibadahTheme;
 
   const NextPrayerWidget({
     super.key,
     required this.salatTimes,
+    required this.ibadahTheme,
   });
 
   @override
@@ -65,18 +69,6 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
 
   _getNextPrayerName(String name, BuildContext context) {
     return name;
-    // //CommonUtils.debugLog("Name -> $name");
-    // if (name == "Fajr") {
-    //   return AppLocalizations.of(context)?.fajr ?? "Fajr";
-    // } else if (name == "Dhuhr") {
-    //   return AppLocalizations.of(context)?.dhuhr ?? "Dhuhr";
-    // } else if (name == "Asr") {
-    //   return AppLocalizations.of(context)?.asr ?? "Asr";
-    // } else if (name == "Maghrib") {
-    //   return AppLocalizations.of(context)?.maghrib ?? "Maghrib";
-    // } else if (name == "Isha") {
-    //   return AppLocalizations.of(context)?.isha ?? "Isha";
-    // }
   }
 
   @override

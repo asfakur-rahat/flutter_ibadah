@@ -1,6 +1,6 @@
 name: flutter_ibadah
-description: "A new Flutter package for showing bangladeshs salah time."
-version: 0.0.1
+description: "A Flutter package for showing Bangladeshi salah time."
+version: 0.0.2
 
 environment:
   sdk: ^3.5.0

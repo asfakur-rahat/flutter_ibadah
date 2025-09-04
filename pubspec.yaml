@@ -9,8 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
   dio: ^5.8.0+1
   flutter_svg: ^2.2.0
   flutter_bloc: ^8.1.6
@@ -64,5 +62,4 @@ flutter:
 
 homepage: https://github.com/asfakur-rahat/flutter_ibadah
 repository: https://github.com/asfakur-rahat/flutter_ibadah
-author: AR-Rahat <asfakurrahat7@gmail.com>
 license: MIT

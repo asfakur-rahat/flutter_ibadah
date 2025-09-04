@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/med_easy_searchbar.dart';
-import '../core/ibadah_theme.dart';
+import '../../../flutter_ibadah.dart';
 
 class DistrictSelectionBottomSheet extends StatefulWidget {
   final Function(String)? onSelect;
   final IbadahTheme ibadahTheme;
+  final List<IbadahStrings> ibadahStrings;
+  final List<String> supportedLocals;
+  final String currentLocale;
 
   const DistrictSelectionBottomSheet({
     super.key,
     this.onSelect,
     required this.ibadahTheme,
+    required this.ibadahStrings,
+    required this.supportedLocals,
+    required this.currentLocale,
   });
 
   @override

@@ -3,16 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ibadah/src/core/utils/common_utils.dart';
 import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
 
+import '../core/ibadah_strings.dart';
 import '../core/ibadah_theme.dart';
 
 class NextPrayerWidget extends StatefulWidget {
   final SalatTimeTableEntity salatTimes;
   final IbadahTheme ibadahTheme;
+  final List<IbadahStrings> ibadahStrings;
+  final List<String> supportedLocals;
+  final String currentLocale;
 
   const NextPrayerWidget({
     super.key,
     required this.salatTimes,
     required this.ibadahTheme,
+    required this.ibadahStrings,
+    required this.supportedLocals,
+    required this.currentLocale,
   });
 
   @override
@@ -23,10 +30,16 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
   late Timer _timer;
   String _nextPrayerName = '';
   DateTime? _nextPrayerTime;
+  late IbadahStrings ibadahStrings;
 
   @override
   void initState() {
     super.initState();
+    ibadahStrings = CommonUtils.getIbadahString(
+      supportedLocals: widget.supportedLocals,
+      ibadahStrings: widget.ibadahStrings,
+      currentLocale: widget.currentLocale,
+    );
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _updateNextPrayer();
     });
@@ -36,11 +49,11 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
     final now = DateTime.now();
 
     final prayerTimes = {
-      'Fajr': widget.salatTimes.fajr,
-      'Dhuhr': widget.salatTimes.dhuhr,
-      'Asr': widget.salatTimes.asr,
-      'Maghrib': widget.salatTimes.maghrib,
-      'Isha': widget.salatTimes.isha,
+      ibadahStrings.fajr : widget.salatTimes.fajr,
+      ibadahStrings.dhuhr : widget.salatTimes.dhuhr,
+      ibadahStrings.asr : widget.salatTimes.asr,
+      ibadahStrings.maghrib : widget.salatTimes.maghrib,
+      ibadahStrings.isha : widget.salatTimes.isha,
     };
 
     final upcoming = prayerTimes.entries
@@ -55,7 +68,7 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
       });
     } else {
       setState(() {
-        _nextPrayerName = 'Fajr (next day)';
+        _nextPrayerName = ibadahStrings.fajrNextDay;
         _nextPrayerTime = widget.salatTimes.fajr?.add(const Duration(days: 1));
       });
     }
@@ -78,7 +91,7 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Something went wrong")
+                Text(ibadahStrings.somethingWentWrong)
               ],
             ),
           )
@@ -90,7 +103,7 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '${"Upcoming"}: ${_getNextPrayerName(_nextPrayerName, context) ?? "--"}',
+                    '${ibadahStrings.upcoming}: ${_getNextPrayerName(_nextPrayerName, context) ?? "--"}',
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
@@ -100,7 +113,7 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
                   Text(
                     '( ${CommonUtils.formatNumber(
                       CommonUtils.formatTimeDefault(_nextPrayerTime),
-                      locale: 'en',
+                      locale: widget.currentLocale,
                     )} )',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -108,10 +121,10 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
               ),
               const SizedBox(height: 8),
               Text(
-                '${"Start in"}: ${CommonUtils.formatNumber(
+                '${ibadahStrings.startIn}: ${CommonUtils.formatNumber(
                   _formatDuration(_nextPrayerTime?.difference(DateTime.now()) ??
                       const Duration(seconds: 0)),
-                  locale: 'en',
+                  locale: widget.currentLocale,
                 )}',
                 style: Theme.of(context)
                     .textTheme

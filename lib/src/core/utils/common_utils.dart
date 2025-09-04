@@ -1,6 +1,8 @@
 import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ibadah/flutter_ibadah.dart';
 import 'package:intl/intl.dart';
 
 class CommonUtils {
@@ -78,7 +80,8 @@ class CommonUtils {
     }
   }
 
-  static String getAmountStringForDropdown(num? number, {bool keepDecimal = true}){
+  static String getAmountStringForDropdown(num? number,
+      {bool keepDecimal = true}) {
     if (number != null) {
       String formatted = formatWithCommas(number, keepDecimal: keepDecimal);
       return formatted;
@@ -98,8 +101,7 @@ class CommonUtils {
 
   static bool isValidEmailAddress(String email) {
     final RegExp emailRegExp = RegExp(
-        r"^(?!.*\.\.)[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]{0,62}[a-zA-Z0-9])?@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-    );
+        r"^(?!.*\.\.)[a-zA-Z0-9](?:[a-zA-Z0-9._%+-]{0,62}[a-zA-Z0-9])?@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
     return emailRegExp.hasMatch(email);
   }
 
@@ -118,7 +120,6 @@ class CommonUtils {
     final specialCharRegex = RegExp(r'[^\w\s]');
     return specialCharRegex.hasMatch(text);
   }
-
 
   static debugLog(String logMessage) {
     if (kDebugMode) {
@@ -142,8 +143,6 @@ class CommonUtils {
     return val * (width * 160) / MediaQuery.of(context).devicePixelRatio;
   }
 
-
-
   static TimeOfDay addTime(TimeOfDay time, {required Duration addedTime}) {
     final now = DateTime.now();
     final dateTime =
@@ -152,7 +151,6 @@ class CommonUtils {
 
     return TimeOfDay(hour: dateTime.hour, minute: dateTime.minute);
   }
-
 
   static String convertDictionaryToString({
     required Map<String, dynamic> dictionary,
@@ -222,7 +220,8 @@ class CommonUtils {
     return null;
   }
 
-  static bool isStoreVersionNewer({required String currentAppVersion, required String storeVersion}) {
+  static bool isStoreVersionNewer(
+      {required String currentAppVersion, required String storeVersion}) {
     List<int> current = currentAppVersion.split('.').map(int.parse).toList();
     List<int> store = storeVersion.split('.').map(int.parse).toList();
 
@@ -234,48 +233,24 @@ class CommonUtils {
     return false; // versions are equal
   }
 
-
+  static IbadahStrings getIbadahString({
+    required List<String> supportedLocals,
+    required List<IbadahStrings> ibadahStrings,
+    required String currentLocale,
+  }) {
+    return ibadahStrings[supportedLocals.indexOf(currentLocale)];
+  }
 }
 
 const numberMap = {
-  "0": {
-    "en": "0",
-    "bn": "০"
-  },
-  "1": {
-    "en": "1",
-    "bn": "১"
-  },
-  "2": {
-    "en": "2",
-    "bn": "২"
-  },
-  "3": {
-    "en": "3",
-    "bn": "৩"
-  },
-  "4": {
-    "en": "4",
-    "bn": "৪"
-  },
-  "5": {
-    "en": "5",
-    "bn": "৫"
-  },
-  "6": {
-    "en": "6",
-    "bn": "৬"
-  },
-  "7": {
-    "en": "7",
-    "bn": "৭"
-  },
-  "8": {
-    "en": "8",
-    "bn": "৮"
-  },
-  "9": {
-    "en": "9",
-    "bn": "৯"
-  }
+  "0": {"en": "0", "bn": "০"},
+  "1": {"en": "1", "bn": "১"},
+  "2": {"en": "2", "bn": "২"},
+  "3": {"en": "3", "bn": "৩"},
+  "4": {"en": "4", "bn": "৪"},
+  "5": {"en": "5", "bn": "৫"},
+  "6": {"en": "6", "bn": "৬"},
+  "7": {"en": "7", "bn": "৭"},
+  "8": {"en": "8", "bn": "৮"},
+  "9": {"en": "9", "bn": "৯"}
 };

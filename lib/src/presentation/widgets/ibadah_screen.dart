@@ -8,6 +8,7 @@ import 'package:flutter_ibadah/src/core/utils/common_utils.dart';
 import 'package:flutter_ibadah/src/core/utils/svg_color_mapper.dart';
 import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
 import 'package:flutter_ibadah/src/presentation/bloc/ibadah_bloc.dart';
+import 'package:flutter_ibadah/src/presentation/core/ibadah_strings.dart';
 import 'package:flutter_ibadah/src/presentation/core/ibadah_theme.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/district_selection_bottom_sheet.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/salah_time_widget.dart';
@@ -16,12 +17,29 @@ import 'package:hive_flutter/adapters.dart';
 
 import 'next_prayer_widget.dart';
 
+export 'package:flutter_ibadah/src/presentation/core/ibadah_strings.dart';
 export 'package:flutter_ibadah/src/presentation/core/ibadah_theme.dart';
 
 class IbadahScreen extends StatefulWidget {
-  const IbadahScreen({super.key, required this.ibadahTheme});
+  IbadahScreen({
+    super.key,
+    required this.ibadahTheme,
+    required this.currentLocale,
+    this.supportedLocals = const ['en'],
+    this.ibadahStrings = const [IbadahStrings()],
+  })  : assert(
+          supportedLocals.length == ibadahStrings.length,
+          'supportedLocals and ibadahStrings must have the same length',
+        ),
+        assert(
+          supportedLocals.contains(currentLocale),
+          'currentLocale must be present in supportedLocals',
+        );
 
   final IbadahTheme ibadahTheme;
+  final List<IbadahStrings> ibadahStrings;
+  final List<String> supportedLocals;
+  final String currentLocale;
 
   @override
   State<IbadahScreen> createState() => _IbadahScreenState();
@@ -71,6 +89,11 @@ class _IbadahScreenState extends State<IbadahScreen>
 
   @override
   Widget build(BuildContext context) {
+    final finalStrings = CommonUtils.getIbadahString(
+      supportedLocals: widget.supportedLocals,
+      ibadahStrings: widget.ibadahStrings,
+      currentLocale: widget.currentLocale,
+    );
     return BlocProvider<IbadahBloc>(
       create: (_) => _ibadahBloc,
       child: Container(
@@ -105,7 +128,7 @@ class _IbadahScreenState extends State<IbadahScreen>
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        "Ibadah",
+                        finalStrings.ibadah,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ],
@@ -139,8 +162,8 @@ class _IbadahScreenState extends State<IbadahScreen>
                                         width: MediaQuery.sizeOf(context).width,
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color: widget
-                                                .ibadahTheme.foregroundOnPrimary,
+                                            color: widget.ibadahTheme
+                                                .foregroundOnPrimary,
                                             borderRadius: BorderRadius.only(
                                               topLeft: Radius.circular(24),
                                               topRight: Radius.circular(24),
@@ -170,13 +193,16 @@ class _IbadahScreenState extends State<IbadahScreen>
                                               .ibadahTheme.foregroundOnPrimary,
                                           child: DistrictSelectionBottomSheet(
                                             ibadahTheme: widget.ibadahTheme,
+                                            ibadahStrings: widget.ibadahStrings,
+                                            supportedLocals: widget.supportedLocals,
+                                            currentLocale: widget.currentLocale,
                                             onSelect: (district) {
                                               selectedDistrict.value = district;
-                                              if (district !=
-                                                  _ibadahBloc.selectedDistrict) {
+                                              if (district != _ibadahBloc.selectedDistrict) {
                                                 _ibadahBloc.add(
                                                   FetchSalatTime(
-                                                      district: district),
+                                                    district: district,
+                                                  ),
                                                 );
                                               }
                                               Navigator.of(context).pop();
@@ -224,7 +250,7 @@ class _IbadahScreenState extends State<IbadahScreen>
                           children: [
                             Icon(
                               Icons.location_pin,
-                              color: Theme.of(context).colorScheme.onSurface,
+                              color: widget.ibadahTheme.foregroundOnBackground,
                             ),
                             const SizedBox(width: 6),
                             ValueListenableBuilder(
@@ -252,6 +278,9 @@ class _IbadahScreenState extends State<IbadahScreen>
                   child: NextPrayerWidget(
                     salatTimes: timeTable,
                     ibadahTheme: widget.ibadahTheme,
+                    ibadahStrings: widget.ibadahStrings,
+                    supportedLocals: widget.supportedLocals,
+                    currentLocale: widget.currentLocale,
                   ),
                 );
               },
@@ -274,38 +303,43 @@ class _IbadahScreenState extends State<IbadahScreen>
                         // mainAxisSize: MainAxisSize.min,
                         children: [
                           SalahTimeWidget(
-                            key: const ValueKey("fajr"),
+                            key: ValueKey(finalStrings.fajr),
                             ibadahTheme: widget.ibadahTheme,
+                            currentLocale: widget.currentLocale,
                             iconPath: 'assets/icons/ic_sunrise.svg',
-                            title: "Fajr",
+                            title: finalStrings.fajr,
                             startTime: timeTable.fajr,
                           ),
                           SalahTimeWidget(
-                            key: const ValueKey("dhuhr"),
+                            key: ValueKey(finalStrings.dhuhr),
                             ibadahTheme: widget.ibadahTheme,
+                            currentLocale: widget.currentLocale,
                             iconPath: 'assets/icons/ic_noon.svg',
-                            title: "Dhuhr",
+                            title: finalStrings.dhuhr,
                             startTime: timeTable.dhuhr,
                           ),
                           SalahTimeWidget(
-                            key: const ValueKey("asr"),
+                            key: ValueKey(finalStrings.asr),
                             ibadahTheme: widget.ibadahTheme,
+                            currentLocale: widget.currentLocale,
                             iconPath: 'assets/icons/ic_noon.svg',
-                            title: "Asr",
+                            title: finalStrings.asr,
                             startTime: timeTable.asr,
                           ),
                           SalahTimeWidget(
-                            key: const ValueKey("maghrib"),
+                            key: ValueKey(finalStrings.maghrib),
                             ibadahTheme: widget.ibadahTheme,
+                            currentLocale: widget.currentLocale,
                             iconPath: 'assets/icons/ic_sunset.svg',
-                            title: "Maghrib",
+                            title: finalStrings.maghrib,
                             startTime: timeTable.maghrib,
                           ),
                           SalahTimeWidget(
-                            key: const ValueKey("isha"),
+                            key: ValueKey(finalStrings.isha),
                             ibadahTheme: widget.ibadahTheme,
+                            currentLocale: widget.currentLocale,
                             iconPath: 'assets/icons/ic_night.svg',
-                            title: "Isha",
+                            title: finalStrings.isha,
                             startTime: timeTable.isha,
                           ),
                         ],

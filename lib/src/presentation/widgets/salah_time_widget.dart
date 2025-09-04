@@ -9,6 +9,7 @@ class SalahTimeWidget extends StatelessWidget {
   final String title;
   final DateTime? startTime;
   final IbadahTheme ibadahTheme;
+  final String currentLocale;
 
   const SalahTimeWidget({
     super.key,
@@ -16,6 +17,7 @@ class SalahTimeWidget extends StatelessWidget {
     required this.title,
     required this.startTime,
     required this.ibadahTheme,
+    required this.currentLocale,
   });
 
   bool _isActive(DateTime? time) {
@@ -74,7 +76,7 @@ class SalahTimeWidget extends StatelessWidget {
           Text(
             CommonUtils.formatNumber(
               CommonUtils.formatTimeDefault(startTime),
-              locale: 'en',
+              locale: currentLocale,
             ),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               color:

@@ -129,68 +129,71 @@ class _IbadahScreenState extends State<IbadahScreen>
                                 sigmaY: 14,
                               ),
                               child: SafeArea(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SizedBox(
-                                      height: 36,
-                                      width: MediaQuery.sizeOf(context).width,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: widget
-                                              .ibadahTheme.foregroundOnPrimary,
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(24),
-                                            topRight: Radius.circular(24),
+                                child: Padding(
+                                  padding: MediaQuery.of(context).viewInsets,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                        height: 36,
+                                        width: MediaQuery.sizeOf(context).width,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: widget
+                                                .ibadahTheme.foregroundOnPrimary,
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(24),
+                                              topRight: Radius.circular(24),
+                                            ),
                                           ),
-                                        ),
-                                        child: Center(
-                                          child: SizedBox(
-                                            height: 6,
-                                            width: 36,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    widget.ibadahTheme.border,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  20,
+                                          child: Center(
+                                            child: SizedBox(
+                                              height: 6,
+                                              width: 36,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      widget.ibadahTheme.border,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    20,
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Flexible(
-                                      child: ColoredBox(
-                                        color: widget
-                                            .ibadahTheme.foregroundOnPrimary,
-                                        child: DistrictSelectionBottomSheet(
-                                          ibadahTheme: widget.ibadahTheme,
-                                          onSelect: (district) {
-                                            selectedDistrict.value = district;
-                                            if (district !=
-                                                _ibadahBloc.selectedDistrict) {
-                                              _ibadahBloc.add(
-                                                FetchSalatTime(
-                                                    district: district),
-                                              );
-                                            }
-                                            Navigator.of(context).pop();
-                                          },
+                                      Flexible(
+                                        child: ColoredBox(
+                                          color: widget
+                                              .ibadahTheme.foregroundOnPrimary,
+                                          child: DistrictSelectionBottomSheet(
+                                            ibadahTheme: widget.ibadahTheme,
+                                            onSelect: (district) {
+                                              selectedDistrict.value = district;
+                                              if (district !=
+                                                  _ibadahBloc.selectedDistrict) {
+                                                _ibadahBloc.add(
+                                                  FetchSalatTime(
+                                                      district: district),
+                                                );
+                                              }
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 24,
-                                      width: double.infinity,
-                                      child: Container(
-                                        color: widget
-                                            .ibadahTheme.foregroundOnPrimary,
+                                      SizedBox(
+                                        height: 24,
+                                        width: double.infinity,
+                                        child: Container(
+                                          color: widget
+                                              .ibadahTheme.foregroundOnPrimary,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

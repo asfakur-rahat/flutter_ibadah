@@ -1,10 +1,6 @@
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/adapters.dart';
 
-class HiveService{
+class HiveService {
   static final HiveService _instance = HiveService._();
 
   late Box _cacheBox;
@@ -13,11 +9,11 @@ class HiveService{
 
   static HiveService get instance => _instance;
 
-  Future<void> init() async{
+  Future<void> init() async {
     _cacheBox = await Hive.openBox("cacheBox");
   }
 
-  Future<void> storeData(String key, dynamic value) async{
+  Future<void> storeData(String key, dynamic value) async {
     await _cacheBox.put(key, value);
   }
 
@@ -25,15 +21,17 @@ class HiveService{
     return _cacheBox.get(key);
   }
 
-  Future<void> deleteCacheByKey(String key,) async{
+  Future<void> deleteCacheByKey(
+    String key,
+  ) async {
     await _cacheBox.delete(key);
   }
 
-  Future<void> resetCache() async{
+  Future<void> resetCache() async {
     await _cacheBox.clear();
   }
 
-  Future<void> deleteBox() async{
+  Future<void> deleteBox() async {
     await _cacheBox.close();
   }
 }

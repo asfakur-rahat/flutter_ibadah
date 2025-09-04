@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ibadah/src/core/utils/svg_color_mapper.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../core/utils/common_utils.dart';
+import '../core/ibadah_strings.dart';
 import '../core/ibadah_theme.dart';
 
 class SalahTimeWidget extends StatelessWidget {
@@ -9,9 +11,9 @@ class SalahTimeWidget extends StatelessWidget {
   final String title;
   final DateTime? startTime;
   final IbadahTheme ibadahTheme;
+  final List<String> supportedLocals;
+  final List<IbadahStrings> ibadahStrings;
   final String currentLocale;
-  final String am;
-  final String pm;
 
   const SalahTimeWidget({
     super.key,
@@ -20,8 +22,8 @@ class SalahTimeWidget extends StatelessWidget {
     required this.startTime,
     required this.ibadahTheme,
     required this.currentLocale,
-    required this.am,
-    required this.pm,
+    required this.supportedLocals,
+    required this.ibadahStrings,
   });
 
   bool _isActive(DateTime? time) {
@@ -31,6 +33,11 @@ class SalahTimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ibadahString = CommonUtils.getIbadahString(
+      supportedLocals: supportedLocals,
+      ibadahStrings: ibadahStrings,
+      currentLocale: currentLocale,
+    );
     return SizedBox(
       child: Column(
         children: [
@@ -38,10 +45,9 @@ class SalahTimeWidget extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color:
-                    _isActive(startTime)
-                        ? ibadahTheme.foregroundOnBackground
-                        : ibadahTheme.border,
+                color: _isActive(startTime)
+                    ? ibadahTheme.foregroundOnBackground
+                    : ibadahTheme.border,
                 width: _isActive(startTime) ? 1.5 : 0.5,
               ),
             ),
@@ -53,10 +59,9 @@ class SalahTimeWidget extends StatelessWidget {
                     iconPath,
                     packageName: 'flutter_ibadah',
                     colorMapper: SvgColorMapper(
-                      toColor:
-                          _isActive(startTime)
-                              ? ibadahTheme.foregroundOnBackground
-                              : ibadahTheme.border,
+                      toColor: _isActive(startTime)
+                          ? ibadahTheme.foregroundOnBackground
+                          : ibadahTheme.border,
                     ),
                   ),
                   height: 30,
@@ -69,26 +74,28 @@ class SalahTimeWidget extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color:
-                  _isActive(startTime)
+                  color: _isActive(startTime)
                       ? ibadahTheme.foregroundOnBackground
                       : ibadahTheme.border,
-              fontSize: CommonUtils.getSp(14, context),
-            ),
+                  fontSize: CommonUtils.getSp(14, context),
+                ),
           ),
           // const SizedBox(height: 4),
           Text(
             CommonUtils.formatNumber(
-              CommonUtils.formatTimeDefault(startTime, am: am, pm: pm),
+              CommonUtils.formatTimeDefault(
+                startTime,
+                am: ibadahString.am,
+                pm: ibadahString.pm,
+              ),
               locale: currentLocale,
             ),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color:
-                  _isActive(startTime)
+                  color: _isActive(startTime)
                       ? ibadahTheme.foregroundOnBackground
                       : ibadahTheme.border,
-              fontSize: CommonUtils.getSp(14, context),
-            ),
+                  fontSize: CommonUtils.getSp(14, context),
+                ),
           ),
         ],
       ),

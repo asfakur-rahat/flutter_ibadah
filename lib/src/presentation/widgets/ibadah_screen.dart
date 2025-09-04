@@ -193,9 +193,7 @@ class _IbadahScreenState extends State<IbadahScreen>
                                               .ibadahTheme.foregroundOnPrimary,
                                           child: DistrictSelectionBottomSheet(
                                             ibadahTheme: widget.ibadahTheme,
-                                            ibadahStrings: widget.ibadahStrings,
-                                            supportedLocals: widget.supportedLocals,
-                                            currentLocale: widget.currentLocale,
+                                            searchHintText: finalStrings.searchHintText,
                                             onSelect: (district) {
                                               selectedDistrict.value = district;
                                               if (district != _ibadahBloc.selectedDistrict) {
@@ -309,6 +307,8 @@ class _IbadahScreenState extends State<IbadahScreen>
                             iconPath: 'assets/icons/ic_sunrise.svg',
                             title: finalStrings.fajr,
                             startTime: timeTable.fajr,
+                            am: finalStrings.am,
+                            pm: finalStrings.pm,
                           ),
                           SalahTimeWidget(
                             key: ValueKey(finalStrings.dhuhr),
@@ -317,6 +317,8 @@ class _IbadahScreenState extends State<IbadahScreen>
                             iconPath: 'assets/icons/ic_noon.svg',
                             title: finalStrings.dhuhr,
                             startTime: timeTable.dhuhr,
+                            am: finalStrings.am,
+                            pm: finalStrings.pm,
                           ),
                           SalahTimeWidget(
                             key: ValueKey(finalStrings.asr),
@@ -325,6 +327,8 @@ class _IbadahScreenState extends State<IbadahScreen>
                             iconPath: 'assets/icons/ic_noon.svg',
                             title: finalStrings.asr,
                             startTime: timeTable.asr,
+                            am: finalStrings.am,
+                            pm: finalStrings.pm,
                           ),
                           SalahTimeWidget(
                             key: ValueKey(finalStrings.maghrib),
@@ -333,6 +337,8 @@ class _IbadahScreenState extends State<IbadahScreen>
                             iconPath: 'assets/icons/ic_sunset.svg',
                             title: finalStrings.maghrib,
                             startTime: timeTable.maghrib,
+                            am: finalStrings.am,
+                            pm: finalStrings.pm,
                           ),
                           SalahTimeWidget(
                             key: ValueKey(finalStrings.isha),
@@ -341,6 +347,8 @@ class _IbadahScreenState extends State<IbadahScreen>
                             iconPath: 'assets/icons/ic_night.svg',
                             title: finalStrings.isha,
                             startTime: timeTable.isha,
+                            am: finalStrings.am,
+                            pm: finalStrings.pm,
                           ),
                         ],
                       ),

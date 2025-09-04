@@ -5,17 +5,13 @@ import '../../../flutter_ibadah.dart';
 class DistrictSelectionBottomSheet extends StatefulWidget {
   final Function(String)? onSelect;
   final IbadahTheme ibadahTheme;
-  final List<IbadahStrings> ibadahStrings;
-  final List<String> supportedLocals;
-  final String currentLocale;
+  final String searchHintText;
 
   const DistrictSelectionBottomSheet({
     super.key,
     this.onSelect,
     required this.ibadahTheme,
-    required this.ibadahStrings,
-    required this.supportedLocals,
-    required this.currentLocale,
+    required this.searchHintText,
   });
 
   @override
@@ -35,7 +31,7 @@ class _DistrictSelectionBottomSheetState
         children: [
           MedEasySearchbar(
             ibadahTheme: widget.ibadahTheme,
-            hintText: "Search...",
+            hintText: widget.searchHintText,
             horizontalPadding: 16,
             topPadding: 8,
             onSearchQueryChanged: (query){

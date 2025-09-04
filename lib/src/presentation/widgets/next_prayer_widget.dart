@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ibadah/src/core/utils/common_utils.dart';
 import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
@@ -49,11 +50,11 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
     final now = DateTime.now();
 
     final prayerTimes = {
-      ibadahStrings.fajr : widget.salatTimes.fajr,
-      ibadahStrings.dhuhr : widget.salatTimes.dhuhr,
-      ibadahStrings.asr : widget.salatTimes.asr,
-      ibadahStrings.maghrib : widget.salatTimes.maghrib,
-      ibadahStrings.isha : widget.salatTimes.isha,
+      ibadahStrings.fajr: widget.salatTimes.fajr,
+      ibadahStrings.dhuhr: widget.salatTimes.dhuhr,
+      ibadahStrings.asr: widget.salatTimes.asr,
+      ibadahStrings.maghrib: widget.salatTimes.maghrib,
+      ibadahStrings.isha: widget.salatTimes.isha,
     };
 
     final upcoming = prayerTimes.entries
@@ -90,9 +91,7 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
         ? Center(
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(ibadahStrings.somethingWentWrong)
-              ],
+              children: [Text(ibadahStrings.somethingWentWrong)],
             ),
           )
         : Column(
@@ -112,7 +111,11 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
                   const SizedBox(width: 8),
                   Text(
                     '( ${CommonUtils.formatNumber(
-                      CommonUtils.formatTimeDefault(_nextPrayerTime),
+                      CommonUtils.formatTimeDefault(
+                        _nextPrayerTime,
+                        am: ibadahStrings.am,
+                        pm: ibadahStrings.pm,
+                      ),
                       locale: widget.currentLocale,
                     )} )',
                     style: Theme.of(context).textTheme.bodyMedium,

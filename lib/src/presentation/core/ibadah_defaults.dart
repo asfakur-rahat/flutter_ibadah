@@ -8,3 +8,7 @@ const fajrNextDayDefault = 'Fajr (next day)';
 const somethingWentWrongDefault = 'Something went wrong';
 const upcomingDefault = 'Upcoming';
 const startInDefault = 'Start in';
+const amDefault = 'AM';
+const pmDefault = 'PM';
+const searchHintTextDefault = 'Search district';
+

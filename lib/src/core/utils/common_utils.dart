@@ -50,7 +50,11 @@ class CommonUtils {
     return DateFormat("yyyy-MM-dd").format(time);
   }
 
-  static String formatTimeDefault(DateTime? dateTime) {
+  static String formatTimeDefault(
+    DateTime? dateTime, {
+    String am = 'AM',
+    String pm = 'PM',
+  }) {
     DateTime? convertedTime = dateTime?.toLocal();
     if (convertedTime == null) {
       return '-';
@@ -59,7 +63,7 @@ class CommonUtils {
     final formattedTime =
         "${convertedTime.hour % 12 == 0 ? 12 : convertedTime.hour % 12}"
         ":${convertedTime.minute.toString().padLeft(2, '0')}"
-        " ${convertedTime.hour >= 12 ? 'PM' : 'AM'}";
+        " ${convertedTime.hour >= 12 ? pm : am}";
 
     return formattedTime;
   }

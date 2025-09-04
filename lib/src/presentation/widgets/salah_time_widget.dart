@@ -10,6 +10,8 @@ class SalahTimeWidget extends StatelessWidget {
   final DateTime? startTime;
   final IbadahTheme ibadahTheme;
   final String currentLocale;
+  final String am;
+  final String pm;
 
   const SalahTimeWidget({
     super.key,
@@ -18,6 +20,8 @@ class SalahTimeWidget extends StatelessWidget {
     required this.startTime,
     required this.ibadahTheme,
     required this.currentLocale,
+    required this.am,
+    required this.pm,
   });
 
   bool _isActive(DateTime? time) {

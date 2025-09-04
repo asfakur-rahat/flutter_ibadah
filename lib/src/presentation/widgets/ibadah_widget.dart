@@ -66,6 +66,12 @@ class _IbadahWidgetState extends State<IbadahWidget>
     });
   }
 
+  @override
+  void didUpdateWidget(covariant IbadahWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {});
+  }
+
   void _initHive() async {
     await Hive.initFlutter();
     await HiveService.instance.init();

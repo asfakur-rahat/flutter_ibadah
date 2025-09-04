@@ -33,13 +33,11 @@ class SalahTimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('supportedLocals -> $supportedLocals');
     final ibadahString = CommonUtils.getIbadahString(
       supportedLocals: supportedLocals,
       ibadahStrings: ibadahStrings,
       currentLocale: currentLocale,
     );
-    print('ibadahString -> $ibadahString');
     return SizedBox(
       child: Column(
         children: [
@@ -87,8 +85,16 @@ class SalahTimeWidget extends StatelessWidget {
             CommonUtils.formatNumber(
               CommonUtils.formatTimeDefault(
                 startTime,
-                am: ibadahString.am,
-                pm: ibadahString.pm,
+                am: CommonUtils.getIbadahString(
+                  supportedLocals: supportedLocals,
+                  ibadahStrings: ibadahStrings,
+                  currentLocale: currentLocale,
+                ).am,
+                pm: CommonUtils.getIbadahString(
+                  supportedLocals: supportedLocals,
+                  ibadahStrings: ibadahStrings,
+                  currentLocale: currentLocale,
+                ).pm,
               ),
               locale: currentLocale,
             ),

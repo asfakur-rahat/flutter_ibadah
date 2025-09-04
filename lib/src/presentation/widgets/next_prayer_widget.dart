@@ -31,40 +31,44 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
   late Timer _timer;
   String _nextPrayerName = '';
   DateTime? _nextPrayerTime;
-  late IbadahStrings ibadahStrings;
 
   @override
   void initState() {
     super.initState();
-    ibadahStrings = CommonUtils.getIbadahString(
-      supportedLocals: widget.supportedLocals,
-      ibadahStrings: widget.ibadahStrings,
-      currentLocale: widget.currentLocale,
-    );
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _updateNextPrayer();
     });
-  }
-
-  @override
-  void didUpdateWidget(covariant NextPrayerWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    ibadahStrings = CommonUtils.getIbadahString(
-      supportedLocals: widget.supportedLocals,
-      ibadahStrings: widget.ibadahStrings,
-      currentLocale: widget.currentLocale,
-    );
   }
 
   void _updateNextPrayer() {
     final now = DateTime.now();
 
     final prayerTimes = {
-      ibadahStrings.fajr: widget.salatTimes.fajr,
-      ibadahStrings.dhuhr: widget.salatTimes.dhuhr,
-      ibadahStrings.asr: widget.salatTimes.asr,
-      ibadahStrings.maghrib: widget.salatTimes.maghrib,
-      ibadahStrings.isha: widget.salatTimes.isha,
+      CommonUtils.getIbadahString(
+        supportedLocals: widget.supportedLocals,
+        ibadahStrings: widget.ibadahStrings,
+        currentLocale: widget.currentLocale,
+      ).fajr: widget.salatTimes.fajr,
+      CommonUtils.getIbadahString(
+        supportedLocals: widget.supportedLocals,
+        ibadahStrings: widget.ibadahStrings,
+        currentLocale: widget.currentLocale,
+      ).dhuhr: widget.salatTimes.dhuhr,
+      CommonUtils.getIbadahString(
+        supportedLocals: widget.supportedLocals,
+        ibadahStrings: widget.ibadahStrings,
+        currentLocale: widget.currentLocale,
+      ).asr: widget.salatTimes.asr,
+      CommonUtils.getIbadahString(
+        supportedLocals: widget.supportedLocals,
+        ibadahStrings: widget.ibadahStrings,
+        currentLocale: widget.currentLocale,
+      ).maghrib: widget.salatTimes.maghrib,
+      CommonUtils.getIbadahString(
+        supportedLocals: widget.supportedLocals,
+        ibadahStrings: widget.ibadahStrings,
+        currentLocale: widget.currentLocale,
+      ).isha: widget.salatTimes.isha,
     };
 
     final upcoming = prayerTimes.entries
@@ -79,7 +83,11 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
       });
     } else {
       setState(() {
-        _nextPrayerName = ibadahStrings.fajrNextDay;
+        _nextPrayerName = CommonUtils.getIbadahString(
+          supportedLocals: widget.supportedLocals,
+          ibadahStrings: widget.ibadahStrings,
+          currentLocale: widget.currentLocale,
+        ).fajrNextDay;
         _nextPrayerTime = widget.salatTimes.fajr?.add(const Duration(days: 1));
       });
     }
@@ -101,7 +109,11 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
         ? Center(
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [Text(ibadahStrings.somethingWentWrong)],
+              children: [Text(CommonUtils.getIbadahString(
+                supportedLocals: widget.supportedLocals,
+                ibadahStrings: widget.ibadahStrings,
+                currentLocale: widget.currentLocale,
+              ).somethingWentWrong)],
             ),
           )
         : Column(
@@ -112,7 +124,11 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '${ibadahStrings.upcoming}: ${_getNextPrayerName(_nextPrayerName, context) ?? "--"}',
+                    '${CommonUtils.getIbadahString(
+                      supportedLocals: widget.supportedLocals,
+                      ibadahStrings: widget.ibadahStrings,
+                      currentLocale: widget.currentLocale,
+                    ).upcoming}: ${_getNextPrayerName(_nextPrayerName, context) ?? "--"}',
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
@@ -123,8 +139,16 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
                     '( ${CommonUtils.formatNumber(
                       CommonUtils.formatTimeDefault(
                         _nextPrayerTime,
-                        am: ibadahStrings.am,
-                        pm: ibadahStrings.pm,
+                        am: CommonUtils.getIbadahString(
+                          supportedLocals: widget.supportedLocals,
+                          ibadahStrings: widget.ibadahStrings,
+                          currentLocale: widget.currentLocale,
+                        ).am,
+                        pm: CommonUtils.getIbadahString(
+                          supportedLocals: widget.supportedLocals,
+                          ibadahStrings: widget.ibadahStrings,
+                          currentLocale: widget.currentLocale,
+                        ).pm,
                       ),
                       locale: widget.currentLocale,
                     )} )',
@@ -134,7 +158,11 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
               ),
               const SizedBox(height: 8),
               Text(
-                '${ibadahStrings.startIn}: ${CommonUtils.formatNumber(
+                '${CommonUtils.getIbadahString(
+                  supportedLocals: widget.supportedLocals,
+                  ibadahStrings: widget.ibadahStrings,
+                  currentLocale: widget.currentLocale,
+                ).startIn}: ${CommonUtils.formatNumber(
                   _formatDuration(_nextPrayerTime?.difference(DateTime.now()) ??
                       const Duration(seconds: 0)),
                   locale: widget.currentLocale,

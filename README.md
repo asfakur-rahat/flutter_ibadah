@@ -3,16 +3,17 @@
 [![Pub Version](https://img.shields.io/pub/v/flutter_ibadah?style=for-the-badge)](https://pub.dev/packages/flutter_ibadah)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-A beautiful, customizable Flutter widget for displaying Islamic prayer times with support for multiple languages and locations.
+A beautiful, customizable Flutter widget for displaying Islamic prayer times with support for multiple languages and locations. This widget provides a complete prayer time solution that can be easily integrated into any Flutter application.
 
 ## Features ✨
 
 - 🕌 Displays all five daily prayer times
 - ⏳ Shows next prayer with countdown
 - 🌍 Multi-language support
-- 🎨 Customizable theming
+- 🎨 Customizable theming with seed color support
 - 📍 District/location selection
 - 📱 Responsive design
+- 🌓 Built-in light and dark themes
 
 ## Installation 💻
 
@@ -30,6 +31,8 @@ flutter pub get
 
 ## Basic Usage 🚀
 
+### Using IbadahWidget
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_ibadah/flutter_ibadah.dart';
@@ -45,33 +48,54 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: IbadahScreen(
-          currentLocale: 'en',
-          supportedLocals: const ['en', 'bn'],
-          ibadahTheme: IbadahTheme.light(), // or IbadahTheme.dark()
-          ibadahStrings: const [
-            IbadahStrings(), // English
-            IbadahStrings( // Bengali
-              ibadah: 'ইবাদাত',
-              fajr: 'ফজর',
-              dhuhr: 'জোহর',
-              asr: 'আসর',
-              maghrib: 'মাগরিব',
-              isha: 'ইশা',
-              fajrNextDay: 'পরদিনের ফজর',
-              somethingWentWrong: 'কিছু একটা সমস্যা হয়েছে',
-              upcoming: 'আসন্ন',
-              startIn: 'শুরু হবে',
-              am: 'সকাল',
-              pm: 'বিকাল',
-              searchHintText: 'জেলা খুঁজুন',
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: IbadahWidget(
+              currentLocale: 'en',
+              supportedLocals: const ['en', 'bn'],
+              ibadahTheme: IbadahTheme.light(), // or IbadahTheme.dark()
+              ibadahStrings: const [
+                IbadahStrings(), // English
+                IbadahStrings( // Bengali
+                  ibadah: 'ইবাদাত',
+                  fajr: 'ফজর',
+                  dhuhr: 'জোহর',
+                  asr: 'আসর',
+                  maghrib: 'মাগরিব',
+                  isha: 'ইশা',
+                  fajrNextDay: 'পরদিনের ফজর',
+                  somethingWentWrong: 'কিছু একটা সমস্যা হয়েছে',
+                  upcoming: 'আসন্ন',
+                  startIn: 'শুরু হবে',
+                  am: 'সকাল',
+                  pm: 'বিকাল',
+                  searchHintText: 'জেলা খুঁজুন',
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
+```
+
+### Using fromSeed Constructor
+
+Create a theme from a seed color:
+
+```dart
+IbadahWidget(
+  currentLocale: 'en',
+  supportedLocals: const ['en'],
+  ibadahTheme: IbadahTheme.fromSeed(
+    seedColor: Colors.blue,
+    brightness: Brightness.light, // or Brightness.dark
+  ),
+  ibadahStrings: const [IbadahStrings()],
+)
 ```
 
 ## Customization 🎨
@@ -92,14 +116,12 @@ IbadahTheme(
 )
 ```
 
-### Light and Dark Theme Presets
+## Theme Options
 
-For convenience, you can use the built-in theme presets:
+### Built-in Presets
 
+#### Light Theme
 ```dart
-///Theme Presets
-
-///Light Theme
 IbadahTheme.light()
 ```
 
@@ -177,7 +199,27 @@ IbadahStrings(
 
 ## API Reference
 
-### IbadahScreen
+### IbadahWidget
+
+The main widget that displays prayer times.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| currentLocale | String | Yes | Current locale code (e.g., 'en', 'bn') |
+| supportedLocals | List<String> | Yes | List of supported locale codes |
+| ibadahTheme | IbadahTheme | Yes | Theme configuration |
+| ibadahStrings | List<IbadahStrings> | Yes | List of string translations |
+
+### IbadahTheme.fromSeed()
+
+Creates a theme from a seed color.
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| seedColor | Color | Yes | - | The base color to generate the theme from |
+| brightness | Brightness | No | Brightness.light | The brightness of the theme (light/dark) |
+
+### IbadahTheme
 
 The main widget that displays prayer times.
 

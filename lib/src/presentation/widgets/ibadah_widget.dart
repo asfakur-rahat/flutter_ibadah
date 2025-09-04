@@ -20,8 +20,8 @@ import 'next_prayer_widget.dart';
 export 'package:flutter_ibadah/src/presentation/core/ibadah_strings.dart';
 export 'package:flutter_ibadah/src/presentation/core/ibadah_theme.dart';
 
-class IbadahScreen extends StatefulWidget {
-  IbadahScreen({
+class IbadahWidget extends StatefulWidget {
+  IbadahWidget({
     super.key,
     required this.ibadahTheme,
     required this.currentLocale,
@@ -42,10 +42,10 @@ class IbadahScreen extends StatefulWidget {
   final String currentLocale;
 
   @override
-  State<IbadahScreen> createState() => _IbadahScreenState();
+  State<IbadahWidget> createState() => _IbadahWidgetState();
 }
 
-class _IbadahScreenState extends State<IbadahScreen>
+class _IbadahWidgetState extends State<IbadahWidget>
     with TickerProviderStateMixin {
   //late Alerts _alerts;
   late Timer _timer;

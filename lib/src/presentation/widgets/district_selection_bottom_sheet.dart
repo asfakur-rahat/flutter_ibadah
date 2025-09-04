@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/med_easy_searchbar.dart';
-import '../../../flutter_ibadah.dart';
+
+import '../core/ibadah_theme.dart';
 
 class DistrictSelectionBottomSheet extends StatefulWidget {
   final Function(String)? onSelect;
@@ -34,10 +35,9 @@ class _DistrictSelectionBottomSheetState
             hintText: widget.searchHintText,
             horizontalPadding: 16,
             topPadding: 8,
-            onSearchQueryChanged: (query){
-              districtList.value = List.from(
-                districts.where((e) => e.toLowerCase().contains(query.toLowerCase()))
-              );
+            onSearchQueryChanged: (query) {
+              districtList.value = List.from(districts
+                  .where((e) => e.toLowerCase().contains(query.toLowerCase())));
             },
           ),
           SizedBox(
@@ -53,8 +53,8 @@ class _DistrictSelectionBottomSheetState
                       return ListTile(
                         title: Text(list[index]),
                         titleAlignment: ListTileTitleAlignment.center,
-                        onTap: (){
-                          if(widget.onSelect != null){
+                        onTap: () {
+                          if (widget.onSelect != null) {
                             widget.onSelect!(list[index]);
                           }
                         },

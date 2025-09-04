@@ -78,19 +78,80 @@ class MyApp extends StatelessWidget {
 
 ### Theming
 
-You can customize the appearance using `IbadahTheme`:
+Customize the appearance using `IbadahTheme`:
 
 ```dart
 IbadahTheme(
-  backgroundColor: Colors.blue,
-  primaryColor: Colors.blue,
-  secondaryColor: Colors.blue,
-  foregroundOnBackground: Colors.blue,
-  foregroundOnPrimary: Colors.blue,
-  foregroundOnSecondary: Colors.blue,
-  border: Colors.blue,
+  backgroundColor: Colors.white,      // Background color of the main container
+  primaryColor: Colors.blue,         // Primary color for important UI elements
+  secondaryColor: Colors.lightBlue,  // Secondary color for less prominent elements
+  foregroundOnBackground: Colors.black87,  // Text color on background
+  foregroundOnPrimary: Colors.white,       // Text color on primary color
+  foregroundOnSecondary: Colors.white,     // Text color on secondary color
+  border: Colors.grey[300]!,               // Border color for UI elements
 )
 ```
+
+### Light and Dark Theme Presets
+
+For convenience, you can use the built-in theme presets:
+
+```dart
+///Theme Presets
+
+///Light Theme
+IbadahTheme.light()
+```
+
+**Color Values:**
+- `backgroundColor`: `Colors.white`
+- `primaryColor`: `Colors.blue[700]!`
+- `secondaryColor`: `Colors.blue[500]!`
+- `foregroundOnBackground`: `Colors.black87`
+- `foregroundOnPrimary`: `Colors.white`
+- `foregroundOnSecondary`: `Colors.white`
+- `border`: `Colors.grey[300]!`
+
+#### Dark Theme
+```dart
+IbadahTheme.dark()
+```
+
+**Color Values:**
+- `backgroundColor`: `Color(0xFF121212)`
+- `primaryColor`: `Colors.blue[200]!`
+- `secondaryColor`: `Colors.blue[400]!`
+- `foregroundOnBackground`: `Colors.white70`
+- `foregroundOnPrimary`: `Colors.black87`
+- `foregroundOnSecondary`: `Colors.black87`
+- `border`: `Colors.grey[800]!`
+
+#### Custom Theme
+Create your own theme with custom colors:
+
+```dart
+final customTheme = IbadahTheme(
+  backgroundColor: const Color(0xFFF5F5F5),
+  primaryColor: const Color(0xFF6200EE),
+  secondaryColor: const Color(0xFF03DAC6),
+  foregroundOnBackground: const Color(0xFF000000),
+  foregroundOnPrimary: const Color(0xFFFFFFFF),
+  foregroundOnSecondary: const Color(0xFF000000),
+  border: const Color(0xFFE0E0E0),
+);
+```
+
+### Theme Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `backgroundColor` | Color | Background color of the main container |
+| `primaryColor` | Color | Primary color for important UI elements |
+| `secondaryColor` | Color | Secondary color for less prominent elements |
+| `foregroundOnBackground` | Color | Text color on background |
+| `foregroundOnPrimary` | Color | Text color on primary color |
+| `foregroundOnSecondary` | Color | Text color on secondary color |
+| `border` | Color | Border color for UI elements |
 
 ### Localization
 
@@ -126,17 +187,6 @@ The main widget that displays prayer times.
 | supportedLocals | List<String> | Yes | List of supported locale codes |
 | ibadahTheme | IbadahTheme | Yes | Theme configuration |
 | ibadahStrings | List<IbadahStrings> | Yes | List of string translations |
-
-### IbadahTheme
-
-Customize the appearance of the prayer times widget.
-
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| primaryColor | Color | Colors.blue | Primary theme color |
-| backgroundColor | Color | Colors.white | Background color |
-| textColor | Color | Colors.black87 | Default text color |
-| accentColor | Color | Colors.blueAccent | Accent color for highlights |
 
 ## Contributing 🤝
 

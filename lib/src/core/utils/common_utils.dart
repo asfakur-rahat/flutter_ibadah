@@ -33,8 +33,6 @@ class CommonUtils {
       return '-';
     }
 
-    print('am -> $am   pm-> $pm');
-
     final formattedTime =
         "${convertedTime.hour % 12 == 0 ? 12 : convertedTime.hour % 12}"
         ":${convertedTime.minute.toString().padLeft(2, '0')}"

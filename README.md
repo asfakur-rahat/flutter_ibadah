@@ -49,31 +49,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: IbadahWidget(
-              currentLocale: 'en',
-              supportedLocals: const ['en', 'bn'],
-              ibadahTheme: IbadahTheme.light(), // or IbadahTheme.dark()
-              ibadahStrings: const [
-                IbadahStrings(), // English
-                IbadahStrings( // Bengali
-                  ibadah: 'ইবাদাত',
-                  fajr: 'ফজর',
-                  dhuhr: 'জোহর',
-                  asr: 'আসর',
-                  maghrib: 'মাগরিব',
-                  isha: 'ইশা',
-                  fajrNextDay: 'পরদিনের ফজর',
-                  somethingWentWrong: 'কিছু একটা সমস্যা হয়েছে',
-                  upcoming: 'আসন্ন',
-                  startIn: 'শুরু হবে',
-                  am: 'সকাল',
-                  pm: 'বিকাল',
-                  searchHintText: 'জেলা খুঁজুন',
-                ),
-              ],
-            ),
+          child: IbadahWidget(
+            currentLocale: 'en',
+            supportedLocals: const ['en', 'bn'],
+            ibadahTheme: IbadahTheme.light(),
+            ibadahStrings: const [IbadahStrings()],
           ),
         ),
       ),

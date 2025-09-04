@@ -33,11 +33,6 @@ class SalahTimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ibadahString = CommonUtils.getIbadahString(
-      supportedLocals: supportedLocals,
-      ibadahStrings: ibadahStrings,
-      currentLocale: currentLocale,
-    );
     return SizedBox(
       child: Column(
         children: [

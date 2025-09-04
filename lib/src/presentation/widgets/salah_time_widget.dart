@@ -79,7 +79,7 @@ class SalahTimeWidget extends StatelessWidget {
           // const SizedBox(height: 4),
           Text(
             CommonUtils.formatNumber(
-              CommonUtils.formatTimeDefault(startTime),
+              CommonUtils.formatTimeDefault(startTime, am: am, pm: pm),
               locale: currentLocale,
             ),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(

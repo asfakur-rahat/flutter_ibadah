@@ -46,6 +46,16 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
     });
   }
 
+  @override
+  void didUpdateWidget(covariant NextPrayerWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    ibadahStrings = CommonUtils.getIbadahString(
+      supportedLocals: widget.supportedLocals,
+      ibadahStrings: widget.ibadahStrings,
+      currentLocale: widget.currentLocale,
+    );
+  }
+
   void _updateNextPrayer() {
     final now = DateTime.now();
 

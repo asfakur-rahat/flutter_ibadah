@@ -41,7 +41,7 @@ class CommonUtils {
     return formattedTime;
   }
 
-  static debugLog(String logMessage) {
+  static void debugLog(String logMessage) {
     if (kDebugMode) {
       log(logMessage);
     }

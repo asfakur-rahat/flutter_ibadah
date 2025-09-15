@@ -1,5 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
+/// A theme configuration class for customizing the appearance of Ibadah widgets.
+///
+/// This class provides a comprehensive theming system that allows you to customize
+/// colors, fonts, and other visual aspects of the prayer time display.
+///
+/// You can create themes using the factory constructors [IbadahTheme.light],
+/// [IbadahTheme.dark], or [IbadahTheme.fromSeed] for automatic color generation.
 class IbadahTheme {
   /// Creates a theme from a seed color, generating a harmonious color scheme
   factory IbadahTheme.fromSeed({
@@ -111,11 +118,44 @@ class IbadahTheme {
     required this.border,
   });
 
+  /// The primary background color of the widget container.
+  ///
+  /// This color is used as the main background for the prayer time display.
   final Color backgroundColor;
+
+  /// The primary color used for important UI elements.
+  ///
+  /// This color is typically used for highlighting the current or next prayer,
+  /// buttons, and other prominent interactive elements.
   final Color primaryColor;
+
+  /// The secondary color used for less prominent UI elements.
+  ///
+  /// This color is used for secondary information, borders, and supporting
+  /// visual elements that complement the primary color.
   final Color secondaryColor;
+
+  /// The text color to be used on top of the background color.
+  ///
+  /// This color ensures proper contrast and readability when text is displayed
+  /// over the [backgroundColor].
   final Color foregroundOnBackground;
+
+  /// The text color to be used on top of the primary color.
+  ///
+  /// This color ensures proper contrast and readability when text is displayed
+  /// over the [primaryColor].
   final Color foregroundOnPrimary;
+
+  /// The text color to be used on top of the secondary color.
+  ///
+  /// This color ensures proper contrast and readability when text is displayed
+  /// over the [secondaryColor].
   final Color foregroundOnSecondary;
+
+  /// The color used for borders and dividers throughout the widget.
+  ///
+  /// This color is used for visual separation between different sections
+  /// and to create subtle boundaries in the UI.
   final Color border;
 }

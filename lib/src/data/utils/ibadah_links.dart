@@ -7,7 +7,7 @@ class IbadahLinks {
 
   final String baseUrl = "https://api.aladhan.com/v1";
 
-  getSalatTimeUrlByDistrict({
+  String getSalatTimeUrlByDistrict({
     required String date,
     required String district,
   }) => "$baseUrl/timingsByAddress/$date?address=$district,Bangladesh&iso8601=true&method=1&school=1";

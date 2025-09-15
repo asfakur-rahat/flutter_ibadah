@@ -55,7 +55,7 @@ class IbadahTheme {
   /// This implementation is very simple, and you may want to use a more
   /// sophisticated color generation algorithm for production.
   ///
-  /// See also: [MaterialColor.generate], which uses a similar approach.
+  /// See also: Flutter's ColorScheme.fromSeed method for advanced color generation.
   static Color _tone(Color seed, int tone) {
     // Simple implementation - you might want to use a more sophisticated
     // color generation algorithm for production

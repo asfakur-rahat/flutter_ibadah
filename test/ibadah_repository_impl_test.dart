@@ -8,13 +8,15 @@ void main() {
     final repository = IbadahRepositoryImpl();
 
     test('getSalatTimeTableForDistrict returns success', () async {
-      final result = await repository.getSalatTimeTableForDistrict(district: 'Dhaka');
+      final result =
+          await repository.getSalatTimeTableForDistrict(district: 'Dhaka');
       expect(result, isNotNull);
       expect(result, isA<DataState<SalatTimeTableEntity>>());
     });
 
     test('getSalatTimeTableForDistrict handles any response', () async {
-      final result = await repository.getSalatTimeTableForDistrict(district: 'InvalidDistrict');
+      final result = await repository.getSalatTimeTableForDistrict(
+          district: 'InvalidDistrict');
       expect(result, isNotNull);
       expect(result, isA<DataState<SalatTimeTableEntity>>());
       // The result can be either success or failure, both are valid responses

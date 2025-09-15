@@ -1,3 +1,11 @@
+## 0.0.4
+
+- Fixed all remaining static analysis issues (11 → 0 issues)
+- Added missing type annotations for better code quality
+- Fixed dead null-aware expression warnings
+- Applied consistent code formatting across entire codebase
+- Improved pub.dev scoring for static analysis (40/50 → 50/50 expected)
+
 ## 0.0.3
 
 - Fixed README version mismatch (corrected from 1.0.0 to 0.0.3)

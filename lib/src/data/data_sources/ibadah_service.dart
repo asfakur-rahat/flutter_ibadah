@@ -13,14 +13,14 @@ class IbadahService {
   }) async {
     return _dioService.callApiService(
       api: () => _dioService.get(
-            url: IbadahLinks.instance.getSalatTimeUrlByDistrict(
-              date: CommonUtils.formatDateDefault(
-                DateTime.now(),
-                pattern: "dd-MM-yyyy",
-              ),
-              district: district,
-            ),
+        url: IbadahLinks.instance.getSalatTimeUrlByDistrict(
+          date: CommonUtils.formatDateDefault(
+            DateTime.now(),
+            pattern: "dd-MM-yyyy",
           ),
+          district: district,
+        ),
+      ),
       responseToDataExtractor: (data) async {
         return SalatTimeTableModel.fromJson(data['data']['timings']);
       },

@@ -99,7 +99,7 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
     super.dispose();
   }
 
-  _getNextPrayerName(String name, BuildContext context) {
+  String _getNextPrayerName(String name, BuildContext context) {
     return name;
   }
 
@@ -109,11 +109,13 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
         ? Center(
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [Text(CommonUtils.getIbadahString(
-                supportedLocals: widget.supportedLocals,
-                ibadahStrings: widget.ibadahStrings,
-                currentLocale: widget.currentLocale,
-              ).somethingWentWrong)],
+              children: [
+                Text(CommonUtils.getIbadahString(
+                  supportedLocals: widget.supportedLocals,
+                  ibadahStrings: widget.ibadahStrings,
+                  currentLocale: widget.currentLocale,
+                ).somethingWentWrong)
+              ],
             ),
           )
         : Column(
@@ -128,7 +130,7 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
                       supportedLocals: widget.supportedLocals,
                       ibadahStrings: widget.ibadahStrings,
                       currentLocale: widget.currentLocale,
-                    ).upcoming}: ${_getNextPrayerName(_nextPrayerName, context) ?? "--"}',
+                    ).upcoming}: ${_getNextPrayerName(_nextPrayerName, context)}',
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium

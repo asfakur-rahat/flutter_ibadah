@@ -11,4 +11,3 @@ const startInDefault = 'Start in';
 const amDefault = 'AM';
 const pmDefault = 'PM';
 const searchHintTextDefault = 'Search district';
-

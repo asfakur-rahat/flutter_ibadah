@@ -8,7 +8,8 @@ import 'data_state.dart'; // Replace with actual path if needed
 
 class AppConfig {
   static final shared = AppConfig();
-  final String baseUrl = IbadahLinks.instance.baseUrl; // Replace with actual base URL
+  final String baseUrl =
+      IbadahLinks.instance.baseUrl; // Replace with actual base URL
 }
 
 class DioService {
@@ -68,8 +69,7 @@ class DioService {
             case 400:
               final errorData = exception.response?.data;
               if (errorData != null &&
-                  errorData['detail'] == 'Invalid or expired refresh token') {
-              }
+                  errorData['detail'] == 'Invalid or expired refresh token') {}
               _debugLog("Bad Request");
               break;
             case 401:
@@ -92,7 +92,6 @@ class DioService {
   Interceptor _loggingInterceptor() {
     return InterceptorsWrapper(
       onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
-
         _debugLog("========Request======");
         _debugLog(options.method);
         _debugLog(options.uri.toString());
@@ -128,19 +127,15 @@ class DioService {
       return errorMessage;
     }
 
-    if(e.type == DioExceptionType.connectionTimeout){
+    if (e.type == DioExceptionType.connectionTimeout) {
       errorMessage = "Connection timed out! Please try again";
       return errorMessage;
-    }
-
-    else if(e.type == DioExceptionType.receiveTimeout){
+    } else if (e.type == DioExceptionType.receiveTimeout) {
       errorMessage = "Receive timeout! Please try again";
       return errorMessage;
     }
 
-
     try {
-
       final responseData = e.response?.data;
       if (responseData is Map) {
         if (responseData["errors"] is List) {
@@ -155,10 +150,10 @@ class DioService {
             errorMessage = descriptions.join("\n ");
           }
         }
-      }
-      else{
-        if(e.response?.statusCode == 429){
-          errorMessage = e.response?.data.toString()??"Unknown Error Occurred";
+      } else {
+        if (e.response?.statusCode == 429) {
+          errorMessage =
+              e.response?.data.toString() ?? "Unknown Error Occurred";
         }
         // else if(e.response?.statusCode == 502)
       }
@@ -217,18 +212,18 @@ class DioService {
           message: 'No Internet Connection');
     }
     try {
-      Dio finalDio =( connectTimeOut == null && receiveTimeOut==null)
+      Dio finalDio = (connectTimeOut == null && receiveTimeOut == null)
           ? _dio
           : Dio(
               BaseOptions(
                 baseUrl: AppConfig.shared.baseUrl,
                 // todo: change when needed
-                connectTimeout:  Duration(milliseconds: connectTimeOut??30000),
-                receiveTimeout:  Duration(milliseconds: receiveTimeOut??30000),
+                connectTimeout: Duration(milliseconds: connectTimeOut ?? 30000),
+                receiveTimeout: Duration(milliseconds: receiveTimeOut ?? 30000),
               ),
             );
-      final Response response =
-          await finalDio.get(url, queryParameters: queryParams, options: options);
+      final Response response = await finalDio.get(url,
+          queryParameters: queryParams, options: options);
       return response;
     } catch (e, s) {
       debugPrint(e.toString());

@@ -136,9 +136,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       supportedLocals: const ['en', 'bn'],
                       ibadahTheme: IbadahTheme.fromSeed(
                         seedColor: Colors.green,
-                        brightness: isDarkTheme
-                            ? Brightness.dark
-                            : Brightness.light,
+                        brightness:
+                            isDarkTheme ? Brightness.dark : Brightness.light,
                       ),
                       ibadahStrings: const [
                         IbadahStrings(), // English

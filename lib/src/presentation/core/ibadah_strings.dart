@@ -1,6 +1,5 @@
 import 'ibadah_defaults.dart';
 
-
 /// A class that holds all the string resources used in the Ibadah application.
 ///
 /// This class provides a centralized way to manage all UI strings, making it easier
@@ -116,4 +115,3 @@ class IbadahStrings {
   /// Default: 'Search district'
   final String searchHintText;
 }
-

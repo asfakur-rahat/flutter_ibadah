@@ -34,10 +34,10 @@ void main() {
 
     test('copyWith returns updated model', () {
       final model = SalatTimeTableModel.fromJson(json);
-      final updated = model.copyWith(fajr: DateTime.parse('2025-09-04T05:00:00.000'));
+      final updated =
+          model.copyWith(fajr: DateTime.parse('2025-09-04T05:00:00.000'));
       expect(updated.fajr, DateTime.parse('2025-09-04T05:00:00.000'));
       expect(updated.sunrise, model.sunrise);
     });
   });
 }
-

@@ -17,6 +17,10 @@ class SvgColorMapper extends ColorMapper {
     String attributeName,
     Color color,
   ) {
-    return color == fromColor ? toColor : fromColor == null ? toColor : color;
+    return color == fromColor
+        ? toColor
+        : fromColor == null
+            ? toColor
+            : color;
   }
 }

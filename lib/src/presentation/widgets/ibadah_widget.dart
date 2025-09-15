@@ -192,14 +192,20 @@ class _IbadahWidgetState extends State<IbadahWidget>
                                               .ibadahTheme.foregroundOnPrimary,
                                           child: DistrictSelectionBottomSheet(
                                             ibadahTheme: widget.ibadahTheme,
-                                            searchHintText: CommonUtils.getIbadahString(
-                                              supportedLocals: widget.supportedLocals,
-                                              ibadahStrings: widget.ibadahStrings,
-                                              currentLocale: widget.currentLocale,
+                                            searchHintText:
+                                                CommonUtils.getIbadahString(
+                                              supportedLocals:
+                                                  widget.supportedLocals,
+                                              ibadahStrings:
+                                                  widget.ibadahStrings,
+                                              currentLocale:
+                                                  widget.currentLocale,
                                             ).searchHintText,
                                             onSelect: (district) {
                                               selectedDistrict.value = district;
-                                              if (district != _ibadahBloc.selectedDistrict) {
+                                              if (district !=
+                                                  _ibadahBloc
+                                                      .selectedDistrict) {
                                                 _ibadahBloc.add(
                                                   FetchSalatTime(
                                                     district: district,
@@ -305,10 +311,11 @@ class _IbadahWidgetState extends State<IbadahWidget>
                         children: [
                           SalahTimeWidget(
                             key: ValueKey(CommonUtils.getIbadahString(
-                              supportedLocals: widget.supportedLocals,
-                              ibadahStrings: widget.ibadahStrings,
-                              currentLocale: widget.currentLocale,
-                            ).fajr + widget.currentLocale),
+                                  supportedLocals: widget.supportedLocals,
+                                  ibadahStrings: widget.ibadahStrings,
+                                  currentLocale: widget.currentLocale,
+                                ).fajr +
+                                widget.currentLocale),
                             ibadahTheme: widget.ibadahTheme,
                             currentLocale: widget.currentLocale,
                             iconPath: 'assets/icons/ic_sunrise.svg',
@@ -323,10 +330,11 @@ class _IbadahWidgetState extends State<IbadahWidget>
                           ),
                           SalahTimeWidget(
                             key: ValueKey(CommonUtils.getIbadahString(
-                              supportedLocals: widget.supportedLocals,
-                              ibadahStrings: widget.ibadahStrings,
-                              currentLocale: widget.currentLocale,
-                            ).dhuhr + widget.currentLocale),
+                                  supportedLocals: widget.supportedLocals,
+                                  ibadahStrings: widget.ibadahStrings,
+                                  currentLocale: widget.currentLocale,
+                                ).dhuhr +
+                                widget.currentLocale),
                             ibadahTheme: widget.ibadahTheme,
                             currentLocale: widget.currentLocale,
                             iconPath: 'assets/icons/ic_noon.svg',
@@ -341,10 +349,11 @@ class _IbadahWidgetState extends State<IbadahWidget>
                           ),
                           SalahTimeWidget(
                             key: ValueKey(CommonUtils.getIbadahString(
-                              supportedLocals: widget.supportedLocals,
-                              ibadahStrings: widget.ibadahStrings,
-                              currentLocale: widget.currentLocale,
-                            ).asr + widget.currentLocale),
+                                  supportedLocals: widget.supportedLocals,
+                                  ibadahStrings: widget.ibadahStrings,
+                                  currentLocale: widget.currentLocale,
+                                ).asr +
+                                widget.currentLocale),
                             ibadahTheme: widget.ibadahTheme,
                             currentLocale: widget.currentLocale,
                             iconPath: 'assets/icons/ic_noon.svg',
@@ -359,10 +368,11 @@ class _IbadahWidgetState extends State<IbadahWidget>
                           ),
                           SalahTimeWidget(
                             key: ValueKey(CommonUtils.getIbadahString(
-                              supportedLocals: widget.supportedLocals,
-                              ibadahStrings: widget.ibadahStrings,
-                              currentLocale: widget.currentLocale,
-                            ).maghrib + widget.currentLocale),
+                                  supportedLocals: widget.supportedLocals,
+                                  ibadahStrings: widget.ibadahStrings,
+                                  currentLocale: widget.currentLocale,
+                                ).maghrib +
+                                widget.currentLocale),
                             ibadahTheme: widget.ibadahTheme,
                             currentLocale: widget.currentLocale,
                             supportedLocals: widget.supportedLocals,
@@ -377,10 +387,11 @@ class _IbadahWidgetState extends State<IbadahWidget>
                           ),
                           SalahTimeWidget(
                             key: ValueKey(CommonUtils.getIbadahString(
-                              supportedLocals: widget.supportedLocals,
-                              ibadahStrings: widget.ibadahStrings,
-                              currentLocale: widget.currentLocale,
-                            ).isha + widget.currentLocale),
+                                  supportedLocals: widget.supportedLocals,
+                                  ibadahStrings: widget.ibadahStrings,
+                                  currentLocale: widget.currentLocale,
+                                ).isha +
+                                widget.currentLocale),
                             ibadahTheme: widget.ibadahTheme,
                             currentLocale: widget.currentLocale,
                             supportedLocals: widget.supportedLocals,

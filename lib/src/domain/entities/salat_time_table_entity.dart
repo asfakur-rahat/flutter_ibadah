@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class SalatTimeTableEntity extends Equatable{
+class SalatTimeTableEntity extends Equatable {
   final DateTime? fajr;
   final DateTime? sunrise;
   final DateTime? dhuhr;
@@ -29,16 +29,16 @@ class SalatTimeTableEntity extends Equatable{
 
   @override
   List<Object?> get props => [
-  fajr,
-  sunrise,
-  dhuhr,
-  asr,
-  sunset,
-  maghrib,
-  isha,
-  imsak,
-  midnight,
-  firstthird,
-  lastthird,
-  ];
+        fajr,
+        sunrise,
+        dhuhr,
+        asr,
+        sunset,
+        maghrib,
+        isha,
+        imsak,
+        midnight,
+        firstthird,
+        lastthird,
+      ];
 }

@@ -1,3 +1,7 @@
+## 0.0.6
+
+- Minor bug fixes
+
 ## 0.0.5
 
 - Updated dependencies to latest stable versions (flutter_bloc 9.1.1, intl 0.20.2)

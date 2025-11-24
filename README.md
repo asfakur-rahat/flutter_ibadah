@@ -21,7 +21,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flutter_ibadah: ^0.0.3
+  flutter_ibadah: ^latest_version
 ```
 
 Then run:
@@ -113,6 +113,9 @@ IbadahTheme.light()
 - `foregroundOnPrimary`: `Colors.white`
 - `foregroundOnSecondary`: `Colors.white`
 - `border`: `Colors.grey[300]!`
+- `currentPrayerColor`: `Colors.blue[700]!`
+- `upcomingPrayerColor`: `Colors.blue[500]!`
+- `previousPrayerColor`: `Colors.grey[300]!`
 
 #### Dark Theme
 ```dart
@@ -127,6 +130,9 @@ IbadahTheme.dark()
 - `foregroundOnPrimary`: `Colors.black87`
 - `foregroundOnSecondary`: `Colors.black87`
 - `border`: `Colors.grey[800]!`
+- `currentPrayerColor`: `Colors.blue[200]!`
+- `upcomingPrayerColor`: `Colors.blue[400]!`
+- `previousPrayerColor`: `Colors.grey[800]!`
 
 #### Custom Theme
 Create your own theme with custom colors:
@@ -154,6 +160,9 @@ final customTheme = IbadahTheme(
 | `foregroundOnPrimary` | Color | Text color on primary color |
 | `foregroundOnSecondary` | Color | Text color on secondary color |
 | `border` | Color | Border color for UI elements |
+| `currentPrayerColor` | Color | Current prayer color |
+| `upcomingPrayerColor` | Color | Upcoming prayer color |
+| `previousPrayerColor` | Color | Previous prayer color |
 
 ### Localization
 
@@ -164,6 +173,7 @@ IbadahStrings(
   ibadah: 'Ibadah',
   fajr: 'Fajr',
   dhuhr: 'Dhuhr',
+  jummah: 'Jum'ah',
   asr: 'Asr',
   maghrib: 'Maghrib',
   isha: 'Isha',

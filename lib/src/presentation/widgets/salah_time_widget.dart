@@ -14,6 +14,7 @@ class SalahTimeWidget extends StatelessWidget {
   final List<String> supportedLocals;
   final List<IbadahStrings> ibadahStrings;
   final String currentLocale;
+  final String currentPrayer;
 
   const SalahTimeWidget({
     super.key,
@@ -24,11 +25,16 @@ class SalahTimeWidget extends StatelessWidget {
     required this.currentLocale,
     required this.supportedLocals,
     required this.ibadahStrings,
+    required this.currentPrayer,
   });
 
   bool _isActive(DateTime? time) {
     if (time == null) return false;
     return DateTime.now().isBefore(time);
+  }
+
+  bool _isCurrentPrayer() {
+    return title == currentPrayer;
   }
 
   @override
@@ -38,14 +44,16 @@ class SalahTimeWidget extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: _isActive(startTime)
-                    ? ibadahTheme.foregroundOnBackground
-                    : ibadahTheme.border,
-                width: _isActive(startTime) ? 1.5 : 0.5,
-              ),
-            ),
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: _isActive(startTime)
+                      ? _isCurrentPrayer()
+                          ? ibadahTheme.currentPrayerColor
+                          : ibadahTheme.upcomingPrayerColor
+                      : ibadahTheme.previousPrayerColor,
+                  width: _isActive(startTime) ? 1.5 : 0.5,
+                ),
+                color: const Color(0XffF8F8FF)),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Center(
@@ -55,8 +63,10 @@ class SalahTimeWidget extends StatelessWidget {
                     packageName: 'flutter_ibadah',
                     colorMapper: SvgColorMapper(
                       toColor: _isActive(startTime)
-                          ? ibadahTheme.foregroundOnBackground
-                          : ibadahTheme.border,
+                          ? _isCurrentPrayer()
+                              ? ibadahTheme.currentPrayerColor
+                              : ibadahTheme.upcomingPrayerColor
+                          : ibadahTheme.previousPrayerColor,
                     ),
                   ),
                   height: 30,
@@ -70,8 +80,10 @@ class SalahTimeWidget extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: _isActive(startTime)
-                      ? ibadahTheme.foregroundOnBackground
-                      : ibadahTheme.border,
+                      ? _isCurrentPrayer()
+                          ? ibadahTheme.currentPrayerColor
+                          : ibadahTheme.upcomingPrayerColor
+                      : ibadahTheme.previousPrayerColor,
                   fontSize: CommonUtils.getSp(14, context),
                 ),
           ),
@@ -95,8 +107,10 @@ class SalahTimeWidget extends StatelessWidget {
             ),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   color: _isActive(startTime)
-                      ? ibadahTheme.foregroundOnBackground
-                      : ibadahTheme.border,
+                      ? _isCurrentPrayer()
+                          ? ibadahTheme.currentPrayerColor
+                          : ibadahTheme.upcomingPrayerColor
+                      : ibadahTheme.previousPrayerColor,
                   fontSize: CommonUtils.getSp(14, context),
                 ),
           ),

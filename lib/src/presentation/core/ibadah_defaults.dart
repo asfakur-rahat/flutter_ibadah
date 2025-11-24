@@ -1,6 +1,7 @@
 const ibadahDefault = 'Ibadah';
 const fajrDefault = 'Fajr';
 const dhuhrDefault = 'Dhuhr';
+const jummahDefault = 'Jum\'ah';
 const asrDefault = 'Asr';
 const maghribDefault = 'Maghrib';
 const ishaDefault = 'Isha';

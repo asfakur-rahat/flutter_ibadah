@@ -35,6 +35,7 @@ class IbadahStrings {
   ///   ibadah: 'ইবাদাত',
   ///   fajr: 'ফজর',
   ///   dhuhr: 'জোহর',
+  ///   jummah: 'জুম্মা',
   ///   asr: 'আসর',
   ///   maghrib: 'মাগরিব',
   ///   isha: 'ইশা',
@@ -51,6 +52,7 @@ class IbadahStrings {
     this.ibadah = ibadahDefault,
     this.fajr = fajrDefault,
     this.dhuhr = dhuhrDefault,
+    this.jummah = jummahDefault,
     this.asr = asrDefault,
     this.maghrib = maghribDefault,
     this.isha = ishaDefault,
@@ -74,6 +76,10 @@ class IbadahStrings {
   /// The name of the Dhuhr prayer.
   /// Default: 'Dhuhr'
   final String dhuhr;
+
+  /// The name of the Jum'ah prayer.
+  /// Default: 'Jum'ah'
+  final String jummah;
 
   /// The name of the Asr prayer.
   /// Default: 'Asr'

@@ -7,6 +7,7 @@ class IbadahLinks {
 
   final String baseUrl = "https://api.aladhan.com/v1";
 
+  /// Get the salat time URL by district.
   String getSalatTimeUrlByDistrict({
     required String date,
     required String district,

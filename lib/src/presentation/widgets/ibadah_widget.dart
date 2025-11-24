@@ -55,6 +55,7 @@ class _IbadahWidgetState extends State<IbadahWidget>
     const SalatTimeTableEntity(),
   );
   final ValueNotifier<bool> periodicRefresh = ValueNotifier(true);
+  final ValueNotifier<String> currentPrayer = ValueNotifier("Fajr");
 
   @override
   void initState() {
@@ -288,129 +289,151 @@ class _IbadahWidgetState extends State<IbadahWidget>
                     ibadahStrings: widget.ibadahStrings,
                     supportedLocals: widget.supportedLocals,
                     currentLocale: widget.currentLocale,
+                    getNextPrayerName: (prayerName) {
+                      currentPrayer.value = prayerName;
+                    },
                   ),
                 );
               },
             ),
             const Divider(height: 20),
             ValueListenableBuilder(
-              valueListenable: salatTimeEntity,
-              builder: (_, timeTable, __) {
-                return ValueListenableBuilder(
-                  valueListenable: periodicRefresh,
-                  builder: (_, __, ___) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        bottom: 8,
-                        left: 8,
-                        right: 8,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        // mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SalahTimeWidget(
-                            key: ValueKey(CommonUtils.getIbadahString(
+                valueListenable: currentPrayer,
+                builder: (_, currentPrayer, __) {
+                  return ValueListenableBuilder(
+                    valueListenable: salatTimeEntity,
+                    builder: (_, timeTable, __) {
+                      return ValueListenableBuilder(
+                        valueListenable: periodicRefresh,
+                        builder: (_, __, ___) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 8,
+                              left: 8,
+                              right: 8,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              // mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SalahTimeWidget(
+                                  key: ValueKey(CommonUtils.getIbadahString(
+                                        supportedLocals: widget.supportedLocals,
+                                        ibadahStrings: widget.ibadahStrings,
+                                        currentLocale: widget.currentLocale,
+                                      ).fajr +
+                                      widget.currentLocale),
+                                  ibadahTheme: widget.ibadahTheme,
+                                  currentLocale: widget.currentLocale,
+                                  iconPath: 'assets/icons/ic_fajr.svg',
+                                  title: CommonUtils.getIbadahString(
+                                    supportedLocals: widget.supportedLocals,
+                                    ibadahStrings: widget.ibadahStrings,
+                                    currentLocale: widget.currentLocale,
+                                  ).fajr,
+                                  startTime: timeTable.fajr,
                                   supportedLocals: widget.supportedLocals,
                                   ibadahStrings: widget.ibadahStrings,
+                                  currentPrayer: currentPrayer,
+                                ),
+                                SalahTimeWidget(
+                                  key: ValueKey(CommonUtils.getIbadahString(
+                                        supportedLocals: widget.supportedLocals,
+                                        ibadahStrings: widget.ibadahStrings,
+                                        currentLocale: widget.currentLocale,
+                                      ).dhuhr +
+                                      widget.currentLocale),
+                                  ibadahTheme: widget.ibadahTheme,
                                   currentLocale: widget.currentLocale,
-                                ).fajr +
-                                widget.currentLocale),
-                            ibadahTheme: widget.ibadahTheme,
-                            currentLocale: widget.currentLocale,
-                            iconPath: 'assets/icons/ic_sunrise.svg',
-                            title: CommonUtils.getIbadahString(
-                              supportedLocals: widget.supportedLocals,
-                              ibadahStrings: widget.ibadahStrings,
-                              currentLocale: widget.currentLocale,
-                            ).fajr,
-                            startTime: timeTable.fajr,
-                            supportedLocals: widget.supportedLocals,
-                            ibadahStrings: widget.ibadahStrings,
-                          ),
-                          SalahTimeWidget(
-                            key: ValueKey(CommonUtils.getIbadahString(
+                                  iconPath: timeTable.isFriday
+                                      ? 'assets/icons/ic_jummah.svg'
+                                      : 'assets/icons/ic_duhr.svg',
+                                  title: timeTable.isFriday
+                                      ? CommonUtils.getIbadahString(
+                                          supportedLocals:
+                                              widget.supportedLocals,
+                                          ibadahStrings: widget.ibadahStrings,
+                                          currentLocale: widget.currentLocale,
+                                        ).jummah
+                                      : CommonUtils.getIbadahString(
+                                          supportedLocals:
+                                              widget.supportedLocals,
+                                          ibadahStrings: widget.ibadahStrings,
+                                          currentLocale: widget.currentLocale,
+                                        ).dhuhr,
+                                  startTime: timeTable.dhuhr,
                                   supportedLocals: widget.supportedLocals,
                                   ibadahStrings: widget.ibadahStrings,
+                                  currentPrayer: currentPrayer,
+                                ),
+                                SalahTimeWidget(
+                                  key: ValueKey(CommonUtils.getIbadahString(
+                                        supportedLocals: widget.supportedLocals,
+                                        ibadahStrings: widget.ibadahStrings,
+                                        currentLocale: widget.currentLocale,
+                                      ).asr +
+                                      widget.currentLocale),
+                                  ibadahTheme: widget.ibadahTheme,
                                   currentLocale: widget.currentLocale,
-                                ).dhuhr +
-                                widget.currentLocale),
-                            ibadahTheme: widget.ibadahTheme,
-                            currentLocale: widget.currentLocale,
-                            iconPath: 'assets/icons/ic_noon.svg',
-                            title: CommonUtils.getIbadahString(
-                              supportedLocals: widget.supportedLocals,
-                              ibadahStrings: widget.ibadahStrings,
-                              currentLocale: widget.currentLocale,
-                            ).dhuhr,
-                            startTime: timeTable.dhuhr,
-                            supportedLocals: widget.supportedLocals,
-                            ibadahStrings: widget.ibadahStrings,
-                          ),
-                          SalahTimeWidget(
-                            key: ValueKey(CommonUtils.getIbadahString(
+                                  iconPath: 'assets/icons/ic_asr.svg',
+                                  title: CommonUtils.getIbadahString(
+                                    supportedLocals: widget.supportedLocals,
+                                    ibadahStrings: widget.ibadahStrings,
+                                    currentLocale: widget.currentLocale,
+                                  ).asr,
+                                  startTime: timeTable.asr,
                                   supportedLocals: widget.supportedLocals,
                                   ibadahStrings: widget.ibadahStrings,
+                                  currentPrayer: currentPrayer,
+                                ),
+                                SalahTimeWidget(
+                                  key: ValueKey(CommonUtils.getIbadahString(
+                                        supportedLocals: widget.supportedLocals,
+                                        ibadahStrings: widget.ibadahStrings,
+                                        currentLocale: widget.currentLocale,
+                                      ).maghrib +
+                                      widget.currentLocale),
+                                  ibadahTheme: widget.ibadahTheme,
                                   currentLocale: widget.currentLocale,
-                                ).asr +
-                                widget.currentLocale),
-                            ibadahTheme: widget.ibadahTheme,
-                            currentLocale: widget.currentLocale,
-                            iconPath: 'assets/icons/ic_noon.svg',
-                            title: CommonUtils.getIbadahString(
-                              supportedLocals: widget.supportedLocals,
-                              ibadahStrings: widget.ibadahStrings,
-                              currentLocale: widget.currentLocale,
-                            ).asr,
-                            startTime: timeTable.asr,
-                            supportedLocals: widget.supportedLocals,
-                            ibadahStrings: widget.ibadahStrings,
-                          ),
-                          SalahTimeWidget(
-                            key: ValueKey(CommonUtils.getIbadahString(
                                   supportedLocals: widget.supportedLocals,
                                   ibadahStrings: widget.ibadahStrings,
+                                  iconPath: 'assets/icons/ic_maghrib.svg',
+                                  title: CommonUtils.getIbadahString(
+                                    supportedLocals: widget.supportedLocals,
+                                    ibadahStrings: widget.ibadahStrings,
+                                    currentLocale: widget.currentLocale,
+                                  ).maghrib,
+                                  startTime: timeTable.maghrib,
+                                  currentPrayer: currentPrayer,
+                                ),
+                                SalahTimeWidget(
+                                  key: ValueKey(CommonUtils.getIbadahString(
+                                        supportedLocals: widget.supportedLocals,
+                                        ibadahStrings: widget.ibadahStrings,
+                                        currentLocale: widget.currentLocale,
+                                      ).isha +
+                                      widget.currentLocale),
+                                  ibadahTheme: widget.ibadahTheme,
                                   currentLocale: widget.currentLocale,
-                                ).maghrib +
-                                widget.currentLocale),
-                            ibadahTheme: widget.ibadahTheme,
-                            currentLocale: widget.currentLocale,
-                            supportedLocals: widget.supportedLocals,
-                            ibadahStrings: widget.ibadahStrings,
-                            iconPath: 'assets/icons/ic_sunset.svg',
-                            title: CommonUtils.getIbadahString(
-                              supportedLocals: widget.supportedLocals,
-                              ibadahStrings: widget.ibadahStrings,
-                              currentLocale: widget.currentLocale,
-                            ).maghrib,
-                            startTime: timeTable.maghrib,
-                          ),
-                          SalahTimeWidget(
-                            key: ValueKey(CommonUtils.getIbadahString(
                                   supportedLocals: widget.supportedLocals,
                                   ibadahStrings: widget.ibadahStrings,
-                                  currentLocale: widget.currentLocale,
-                                ).isha +
-                                widget.currentLocale),
-                            ibadahTheme: widget.ibadahTheme,
-                            currentLocale: widget.currentLocale,
-                            supportedLocals: widget.supportedLocals,
-                            ibadahStrings: widget.ibadahStrings,
-                            iconPath: 'assets/icons/ic_night.svg',
-                            title: CommonUtils.getIbadahString(
-                              supportedLocals: widget.supportedLocals,
-                              ibadahStrings: widget.ibadahStrings,
-                              currentLocale: widget.currentLocale,
-                            ).isha,
-                            startTime: timeTable.isha,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+                                  iconPath: 'assets/icons/ic_isha.svg',
+                                  title: CommonUtils.getIbadahString(
+                                    supportedLocals: widget.supportedLocals,
+                                    ibadahStrings: widget.ibadahStrings,
+                                    currentLocale: widget.currentLocale,
+                                  ).isha,
+                                  startTime: timeTable.isha,
+                                  currentPrayer: currentPrayer,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                }),
             BlocListener(
               bloc: _ibadahBloc,
               listener: (_, state) {

@@ -1,3 +1,15 @@
+## 0.0.5
+
+- Updated dependencies to latest stable versions (flutter_bloc 9.1.1, intl 0.20.2)
+- Fixed all static analysis issues and lint warnings
+- Applied consistent Dart formatting across entire codebase
+- Added comprehensive documentation for missing public API elements
+- Enhanced example app with better demonstrations
+- Improved pub.dev scoring for static analysis (150/200 score)
+- Fixed type annotation issues in utility methods
+- All code now passes flutter analyze with zero issues
+
+
 ## 0.0.4
 
 - Fixed all remaining static analysis issues (11 → 0 issues)

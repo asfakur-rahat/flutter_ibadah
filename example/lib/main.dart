@@ -99,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ibadah: 'ইবাদত',
                           fajr: 'ফজর',
                           dhuhr: 'যুহর',
+                          jummah: 'জুম্মা',
                           asr: 'আসর',
                           maghrib: 'মাগরিব',
                           isha: 'ইশা',
@@ -146,6 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ibadah: 'ইবাদত',
                           fajr: 'ফজর',
                           dhuhr: 'যুহর',
+                          jummah: 'জুম্মা',
                           asr: 'আসর',
                           maghrib: 'মাগরিব',
                           isha: 'ইশা',
@@ -189,6 +191,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         foregroundOnPrimary: Color(0xFFFFFFFF),
                         foregroundOnSecondary: Color(0xFF000000),
                         border: Color(0xFFE0E0E0),
+                        previousPrayerColor: Color(0xFFB3B3B3),
+                        currentPrayerColor: Color(0xFF1976D2),
+                        upcomingPrayerColor: Color(0xFF2196F3),
                       ),
                       ibadahStrings: const [
                         IbadahStrings(), // English
@@ -197,6 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ibadah: 'ইবাদত',
                           fajr: 'ফজর',
                           dhuhr: 'যুহর',
+                          jummah: 'জুম্মা',
                           asr: 'আসর',
                           maghrib: 'মাগরিব',
                           isha: 'ইশা',

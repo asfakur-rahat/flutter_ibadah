@@ -14,6 +14,8 @@ class NextPrayerWidget extends StatefulWidget {
   final List<String> supportedLocals;
   final String currentLocale;
 
+  final Function(String) getNextPrayerName;
+
   const NextPrayerWidget({
     super.key,
     required this.salatTimes,
@@ -21,6 +23,7 @@ class NextPrayerWidget extends StatefulWidget {
     required this.ibadahStrings,
     required this.supportedLocals,
     required this.currentLocale,
+    required this.getNextPrayerName,
   });
 
   @override
@@ -49,11 +52,18 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
         ibadahStrings: widget.ibadahStrings,
         currentLocale: widget.currentLocale,
       ).fajr: widget.salatTimes.fajr,
-      CommonUtils.getIbadahString(
-        supportedLocals: widget.supportedLocals,
-        ibadahStrings: widget.ibadahStrings,
-        currentLocale: widget.currentLocale,
-      ).dhuhr: widget.salatTimes.dhuhr,
+      if (widget.salatTimes.isFriday)
+        CommonUtils.getIbadahString(
+          supportedLocals: widget.supportedLocals,
+          ibadahStrings: widget.ibadahStrings,
+          currentLocale: widget.currentLocale,
+        ).jummah: widget.salatTimes.dhuhr,
+      if (!widget.salatTimes.isFriday)
+        CommonUtils.getIbadahString(
+          supportedLocals: widget.supportedLocals,
+          ibadahStrings: widget.ibadahStrings,
+          currentLocale: widget.currentLocale,
+        ).dhuhr: widget.salatTimes.dhuhr,
       CommonUtils.getIbadahString(
         supportedLocals: widget.supportedLocals,
         ibadahStrings: widget.ibadahStrings,

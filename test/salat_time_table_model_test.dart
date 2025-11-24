@@ -18,7 +18,7 @@ void main() {
     };
 
     test('fromJson creates correct model', () {
-      final model = SalatTimeTableModel.fromJson(json);
+      final model = SalatTimeTableModel.fromJson(json, false);
       expect(model.fajr, DateTime.parse(json['Fajr']!));
       expect(model.sunrise, DateTime.parse(json['Sunrise']!));
       expect(model.dhuhr, DateTime.parse(json['Dhuhr']!));
@@ -30,10 +30,11 @@ void main() {
       expect(model.midnight, DateTime.parse(json['Midnight']!));
       expect(model.firstthird, DateTime.parse(json['Firstthird']!));
       expect(model.lastthird, DateTime.parse(json['Lastthird']!));
+      expect(model.isFriday, false);
     });
 
     test('copyWith returns updated model', () {
-      final model = SalatTimeTableModel.fromJson(json);
+      final model = SalatTimeTableModel.fromJson(json, false);
       final updated =
           model.copyWith(fajr: DateTime.parse('2025-09-04T05:00:00.000'));
       expect(updated.fajr, DateTime.parse('2025-09-04T05:00:00.000'));

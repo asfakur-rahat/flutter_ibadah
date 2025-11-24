@@ -22,6 +22,18 @@ class IbadahTheme {
 
     final secondary = isDark ? _tone(seedColor, 60) : _tone(seedColor, 60);
 
+    final previousPrayerColor = isDark
+        ? _tone(seedColor, 40) // Darker in dark mode
+        : _tone(seedColor, 80); // Lighter in light mode
+
+    final currentPrayerColor = isDark
+        ? _tone(seedColor, 60) // Darker in dark mode
+        : _tone(seedColor, 60); // Lighter in light mode
+
+    final upcomingPrayerColor = isDark
+        ? _tone(seedColor, 60) // Darker in dark mode
+        : _tone(seedColor, 60); // Lighter in light mode
+
     final background =
         isDark ? const Color(0xFF121212) : const Color(0xFFFFFFFF);
 
@@ -49,6 +61,9 @@ class IbadahTheme {
       foregroundOnPrimary: onPrimary,
       foregroundOnSecondary: onSecondary,
       border: border,
+      previousPrayerColor: previousPrayerColor,
+      currentPrayerColor: currentPrayerColor,
+      upcomingPrayerColor: upcomingPrayerColor,
     );
   }
 
@@ -80,6 +95,9 @@ class IbadahTheme {
       foregroundOnPrimary: Color(0xFFFFFFFF), // white
       foregroundOnSecondary: Color(0xFFFFFFFF), // white
       border: Color(0xFFE0E0E0), // grey[300]
+      previousPrayerColor: Color(0xFFB3B3B3), // grey[400]
+      currentPrayerColor: Color(0xFF1976D2), // blue[700]
+      upcomingPrayerColor: Color(0xFF2196F3), // blue[500]
     );
   }
 
@@ -93,6 +111,9 @@ class IbadahTheme {
       foregroundOnPrimary: Color(0xDE000000), // black87
       foregroundOnSecondary: Color(0xDE000000), // black87
       border: Color(0xFF424242), // grey[800]
+      previousPrayerColor: Color(0xFFB3B3B3), // grey[400]
+      currentPrayerColor: Color(0xFF1976D2), // blue[700]
+      upcomingPrayerColor: Color(0xFF2196F3), // blue[500]
     );
   }
 
@@ -105,6 +126,9 @@ class IbadahTheme {
     required this.foregroundOnPrimary,
     required this.foregroundOnSecondary,
     required this.border,
+    required this.previousPrayerColor,
+    required this.currentPrayerColor,
+    required this.upcomingPrayerColor,
   });
 
   /// Private constructor for the factory constructors
@@ -116,6 +140,9 @@ class IbadahTheme {
     required this.foregroundOnPrimary,
     required this.foregroundOnSecondary,
     required this.border,
+    required this.previousPrayerColor,
+    required this.currentPrayerColor,
+    required this.upcomingPrayerColor,
   });
 
   /// The primary background color of the widget container.
@@ -158,4 +185,19 @@ class IbadahTheme {
   /// This color is used for visual separation between different sections
   /// and to create subtle boundaries in the UI.
   final Color border;
+
+  /// The color used for previous prayers.
+  ///
+  /// This color is used for previous prayers.
+  final Color previousPrayerColor;
+
+  /// The color used for current or next prayers.
+  ///
+  /// This color is used for current prayers.
+  final Color currentPrayerColor;
+
+  /// The color used for upcoming prayers.
+  ///
+  /// This color is used for upcoming prayers.
+  final Color upcomingPrayerColor;
 }

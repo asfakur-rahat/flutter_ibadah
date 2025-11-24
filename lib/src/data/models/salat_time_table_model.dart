@@ -12,6 +12,7 @@ class SalatTimeTableModel {
   final DateTime midnight;
   final DateTime firstthird;
   final DateTime lastthird;
+  final bool isFriday;
 
   const SalatTimeTableModel({
     required this.fajr,
@@ -25,9 +26,10 @@ class SalatTimeTableModel {
     required this.midnight,
     required this.firstthird,
     required this.lastthird,
+    required this.isFriday,
   });
 
-  factory SalatTimeTableModel.fromJson(dynamic json) {
+  factory SalatTimeTableModel.fromJson(dynamic json, dynamic isFriday) {
     return SalatTimeTableModel(
       fajr: DateTime.parse(json['Fajr']),
       sunrise: DateTime.parse(json['Sunrise']),
@@ -40,6 +42,7 @@ class SalatTimeTableModel {
       midnight: DateTime.parse(json['Midnight']),
       firstthird: DateTime.parse(json['Firstthird']),
       lastthird: DateTime.parse(json['Lastthird']),
+      isFriday: isFriday,
     );
   }
 
@@ -55,6 +58,7 @@ class SalatTimeTableModel {
     DateTime? midnight,
     DateTime? firstthird,
     DateTime? lastthird,
+    bool? isFriday,
   }) {
     return SalatTimeTableModel(
       fajr: fajr ?? this.fajr,
@@ -68,6 +72,7 @@ class SalatTimeTableModel {
       midnight: midnight ?? this.midnight,
       firstthird: firstthird ?? this.firstthird,
       lastthird: lastthird ?? this.lastthird,
+      isFriday: isFriday ?? this.isFriday,
     );
   }
 
@@ -84,6 +89,7 @@ class SalatTimeTableModel {
     map['Midnight'] = midnight;
     map['Firstthird'] = firstthird;
     map['Lastthird'] = lastthird;
+    map['isFriday'] = isFriday;
     return map;
   }
 
@@ -100,6 +106,7 @@ class SalatTimeTableModel {
       midnight: midnight,
       firstthird: firstthird,
       lastthird: lastthird,
+      isFriday: isFriday,
     );
   }
 }

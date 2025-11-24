@@ -22,7 +22,11 @@ class IbadahService {
         ),
       ),
       responseToDataExtractor: (data) async {
-        return SalatTimeTableModel.fromJson(data['data']['timings']);
+        final weekday = data['data']['date']['gregorian']['weekday']['en'];
+        return SalatTimeTableModel.fromJson(
+          data['data']['timings'],
+          weekday.toLowerCase() == 'friday',
+        );
       },
     );
   }

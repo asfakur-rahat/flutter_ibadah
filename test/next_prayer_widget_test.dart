@@ -30,6 +30,7 @@ void main() {
           ibadahStrings: [IbadahStrings()],
           currentLocale: 'en',
           supportedLocals: ['en'],
+          getNextPrayerName: (np) {},
         ),
       ),
     )));

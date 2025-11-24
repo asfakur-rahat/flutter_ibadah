@@ -12,6 +12,7 @@ class SalatTimeTableEntity extends Equatable {
   final DateTime? midnight;
   final DateTime? firstthird;
   final DateTime? lastthird;
+  final bool isFriday;
 
   const SalatTimeTableEntity({
     this.fajr,
@@ -25,6 +26,7 @@ class SalatTimeTableEntity extends Equatable {
     this.midnight,
     this.firstthird,
     this.lastthird,
+    this.isFriday = false,
   });
 
   @override
@@ -40,5 +42,6 @@ class SalatTimeTableEntity extends Equatable {
         midnight,
         firstthird,
         lastthird,
+        isFriday,
       ];
 }

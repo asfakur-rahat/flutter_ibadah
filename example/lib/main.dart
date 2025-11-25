@@ -192,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         foregroundOnSecondary: Color(0xFF000000),
                         border: Color(0xFFE0E0E0),
                         previousPrayerColor: Color(0xFFB3B3B3),
-                        currentPrayerColor: Color(0xFF1976D2),
+                        currentPrayerColor: Color(0xFF1922AA),
                         upcomingPrayerColor: Color(0xFF2196F3),
                       ),
                       ibadahStrings: const [

@@ -1,3 +1,8 @@
+## 0.0.8
+
+- Fix a issue where current prayer time wasn't highlighted correctly
+- Add proper runnable example app
+
 ## 0.0.7
 
 - Minor bug fixes

@@ -90,6 +90,7 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
       setState(() {
         _nextPrayerName = upcoming.first.key;
         _nextPrayerTime = upcoming.first.value;
+        widget.getNextPrayerName(upcoming.first.key);
       });
     } else {
       setState(() {
@@ -99,6 +100,13 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
           currentLocale: widget.currentLocale,
         ).fajrNextDay;
         _nextPrayerTime = widget.salatTimes.fajr?.add(const Duration(days: 1));
+        widget.getNextPrayerName(
+          CommonUtils.getIbadahString(
+            supportedLocals: widget.supportedLocals,
+            ibadahStrings: widget.ibadahStrings,
+            currentLocale: widget.currentLocale,
+          ).fajrNextDay,
+        );
       });
     }
   }

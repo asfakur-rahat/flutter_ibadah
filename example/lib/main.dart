@@ -184,17 +184,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       currentLocale: currentLocale,
                       supportedLocals: const ['en', 'bn'],
                       ibadahTheme: const IbadahTheme(
-                        backgroundColor: Color(0xFFF5F5F5),
-                        primaryColor: Color(0xFF6200EE),
-                        secondaryColor: Color(0xFF03DAC6),
-                        foregroundOnBackground: Color(0xFF000000),
+                        backgroundColor: Color(0xFFF8F8FF),
+                        salatIconBackground: Colors.white,
+                        backgroundGradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFF2E7D32),
+                            Color(0xFF4CAF50),
+                          ],
+                        ),
+                        primaryColor: Color(0xFF000000),
+                        secondaryColor: Color(0xFF43641A),
+                        foregroundOnBackground: Color(0xFF12111A),
                         foregroundOnPrimary: Color(0xFFFFFFFF),
-                        foregroundOnSecondary: Color(0xFF000000),
-                        border: Color(0xFFE0E0E0),
-                        previousPrayerColor: Color(0xFFB3B3B3),
-                        currentPrayerColor: Color(0xFF1922AA),
-                        upcomingPrayerColor: Color(0xFF2196F3),
+                        foregroundOnSecondary: Color(0xFFFFFFFF),
+                        border: Color(0xFFE7E7E8),
+                        previousPrayerColor: Color(0xFFC4C4C4),
+                        currentPrayerColor: Color(0xFF000000),
+                        upcomingPrayerColor: Color(0xFF575660),
                       ),
+                      useGradient: false,
                       ibadahStrings: const [
                         IbadahStrings(), // English
                         IbadahStrings(

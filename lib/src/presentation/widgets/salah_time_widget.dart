@@ -53,7 +53,11 @@ class SalahTimeWidget extends StatelessWidget {
                       : ibadahTheme.previousPrayerColor,
                   width: _isActive(startTime) ? 1.5 : 0.5,
                 ),
-                color: const Color(0XffF8F8FF)),
+                color: ibadahTheme.salatIconBackground != null
+                    ? _isActive(startTime)
+                        ? ibadahTheme.salatIconBackground
+                        : ibadahTheme.salatIconBackground?.withAlpha(100)
+                    : const Color(0XffF8F8FF)),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Center(

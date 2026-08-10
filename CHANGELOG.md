@@ -1,3 +1,9 @@
+## 0.0.9
+
+- Add `IbadahTheme.backgroundGradient` and the `IbadahWidget.useGradient` flag for gradient backgrounds
+- Add `IbadahTheme.salatIconBackground` to customize the circular badge behind each prayer icon
+- Fix the widget container using `foregroundOnPrimary` instead of `backgroundColor` as its background
+
 ## 0.0.8
 
 - Fix a issue where current prayer time wasn't highlighted correctly

@@ -162,6 +162,43 @@ final customTheme = IbadahTheme(
 | `border` | Color | Border color for UI elements |
 | `currentPrayerColor` | Color | Current prayer color |
 | `upcomingPrayerColor` | Color | Upcoming prayer color |
+| `backgroundGradient` | Gradient? | Gradient background, used only when `useGradient: true` |
+| `salatIconBackground` | Color? | Fill of the circular badge behind each prayer icon |
+
+### Gradient Background
+
+Set a `backgroundGradient` on the theme and opt in with `useGradient`. When
+`useGradient` is `false` (the default) the widget paints `backgroundColor` instead.
+
+```dart
+IbadahWidget(
+  currentLocale: 'en',
+  useGradient: true,
+  ibadahTheme: const IbadahTheme(
+    backgroundGradient: LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [Color(0xFF2E7D32), Color(0xFF4CAF50)],
+    ),
+    salatIconBackground: Colors.white,
+    backgroundColor: Color(0xFFF8F8FF),
+    primaryColor: Color(0xFF000000),
+    secondaryColor: Color(0xFF43641A),
+    foregroundOnBackground: Color(0xFF12111A),
+    foregroundOnPrimary: Color(0xFFFFFFFF),
+    foregroundOnSecondary: Color(0xFFFFFFFF),
+    border: Color(0xFFE7E7E8),
+    previousPrayerColor: Color(0xFFC4C4C4),
+    currentPrayerColor: Color(0xFF000000),
+    upcomingPrayerColor: Color(0xFF575660),
+  ),
+  ibadahStrings: const [IbadahStrings()],
+)
+```
+
+Note: `backgroundGradient` and `salatIconBackground` are only available on the
+default `IbadahTheme` constructor — the `light()`, `dark()`, and `fromSeed()`
+presets leave both `null`.
 | `previousPrayerColor` | Color | Previous prayer color |
 
 ### Localization
@@ -199,6 +236,7 @@ The main widget that displays prayer times.
 | supportedLocals | List<String> | Yes | List of supported locale codes |
 | ibadahTheme | IbadahTheme | Yes | Theme configuration |
 | ibadahStrings | List<IbadahStrings> | Yes | List of string translations |
+| useGradient | bool | No | Paint `ibadahTheme.backgroundGradient` instead of `backgroundColor` (default `false`) |
 
 ### IbadahTheme.fromSeed()
 
@@ -238,9 +276,9 @@ For a complete example, check out the `example` directory.
 
 ## Roadmap
 
-- [x] Basic prayer times display
-- [x] Multi-language support
-- [x] Custom theming
-- [ ] Prayer notifications
-- [ ] Qibla direction
-- [ ] Hijri calendar integration
+- ✅ Basic prayer times display
+- ✅ Multi-language support
+- ✅ Custom theming
+- ⬜ Prayer notifications
+- ⬜ Qibla direction
+- ⬜ Hijri calendar integration

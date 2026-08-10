@@ -53,6 +53,27 @@ class IbadahTheme {
         ? const Color(0xFF424242) // grey[800]
         : const Color(0xFFE0E0E0); // grey[300]
 
+    final salatIconBackground =
+        isDark ? const Color(0xFF1976D2) : const Color(0xFF1976D2);
+
+    final backgroundGradient = isDark
+        ? const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF2E7D32),
+              Color(0xFF4CAF50),
+            ],
+          )
+        : const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF2E7D32),
+              Color(0xFF4CAF50),
+            ],
+          );
+
     return IbadahTheme._(
       backgroundColor: background,
       primaryColor: primary,
@@ -64,6 +85,8 @@ class IbadahTheme {
       previousPrayerColor: previousPrayerColor,
       currentPrayerColor: currentPrayerColor,
       upcomingPrayerColor: upcomingPrayerColor,
+      salatIconBackground: salatIconBackground,
+      backgroundGradient: backgroundGradient,
     );
   }
 
@@ -89,15 +112,33 @@ class IbadahTheme {
   factory IbadahTheme.light() {
     return const IbadahTheme._(
       backgroundColor: Color(0xFFFFFFFF),
-      primaryColor: Color(0xFF1976D2), // blue[700]
-      secondaryColor: Color(0xFF2196F3), // blue[500]
-      foregroundOnBackground: Color(0xDE000000), // black87
-      foregroundOnPrimary: Color(0xFFFFFFFF), // white
-      foregroundOnSecondary: Color(0xFFFFFFFF), // white
-      border: Color(0xFFE0E0E0), // grey[300]
-      previousPrayerColor: Color(0xFFB3B3B3), // grey[400]
-      currentPrayerColor: Color(0xFF1976D2), // blue[700]
-      upcomingPrayerColor: Color(0xFF2196F3), // blue[500]
+      primaryColor: Color(0xFF1976D2),
+      // blue[700]
+      secondaryColor: Color(0xFF2196F3),
+      // blue[500]
+      foregroundOnBackground: Color(0xDE000000),
+      // black87
+      foregroundOnPrimary: Color(0xFFFFFFFF),
+      // white
+      foregroundOnSecondary: Color(0xFFFFFFFF),
+      // white
+      border: Color(0xFFE0E0E0),
+      // grey[300]
+      previousPrayerColor: Color(0xFFB3B3B3),
+      // grey[400]
+      currentPrayerColor: Color(0xFF1976D2),
+      // blue[700]
+      upcomingPrayerColor: Color(0xFF2196F3),
+      // blue[500]
+      salatIconBackground: Color(0xFF1976D2),
+      backgroundGradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Color(0xFF2E7D32),
+          Color(0xFF4CAF50),
+        ],
+      ),
     );
   }
 
@@ -105,15 +146,33 @@ class IbadahTheme {
   factory IbadahTheme.dark() {
     return const IbadahTheme._(
       backgroundColor: Color(0xFF121212),
-      primaryColor: Color(0xFF90CAF9), // blue[200]
-      secondaryColor: Color(0xFF64B5F6), // blue[400]
-      foregroundOnBackground: Color(0xB3FFFFFF), // white70
-      foregroundOnPrimary: Color(0xDE000000), // black87
-      foregroundOnSecondary: Color(0xDE000000), // black87
-      border: Color(0xFF424242), // grey[800]
-      previousPrayerColor: Color(0xFFB3B3B3), // grey[400]
-      currentPrayerColor: Color(0xFF1976D2), // blue[700]
-      upcomingPrayerColor: Color(0xFF2196F3), // blue[500]
+      primaryColor: Color(0xFF90CAF9),
+      // blue[200]
+      secondaryColor: Color(0xFF64B5F6),
+      // blue[400]
+      foregroundOnBackground: Color(0xB3FFFFFF),
+      // white70
+      foregroundOnPrimary: Color(0xDE000000),
+      // black87
+      foregroundOnSecondary: Color(0xDE000000),
+      // black87
+      border: Color(0xFF424242),
+      // grey[800]
+      previousPrayerColor: Color(0xFFB3B3B3),
+      // grey[400]
+      currentPrayerColor: Color(0xFF1976D2),
+      // blue[700]
+      upcomingPrayerColor: Color(0xFF2196F3),
+      // blue[500]
+      salatIconBackground: Color(0xFF1976D2),
+      backgroundGradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Color(0xFF2E7D32),
+          Color(0xFF4CAF50),
+        ],
+      ),
     );
   }
 
@@ -129,6 +188,8 @@ class IbadahTheme {
     required this.previousPrayerColor,
     required this.currentPrayerColor,
     required this.upcomingPrayerColor,
+    this.backgroundGradient,
+    this.salatIconBackground,
   });
 
   /// Private constructor for the factory constructors
@@ -143,7 +204,23 @@ class IbadahTheme {
     required this.previousPrayerColor,
     required this.currentPrayerColor,
     required this.upcomingPrayerColor,
+    this.backgroundGradient,
+    this.salatIconBackground,
   });
+
+  /// The gradient painted behind the widget container.
+  ///
+  /// Only used when [IbadahWidget.useGradient] is `true`; otherwise
+  /// [backgroundColor] is painted instead. The built-in [IbadahTheme.light],
+  /// [IbadahTheme.dark], and [IbadahTheme.fromSeed] presets leave this `null`,
+  /// so a gradient must be supplied through the default constructor.
+  final Gradient? backgroundGradient;
+
+  /// The fill color of the circular icon badge behind each prayer icon.
+  ///
+  /// Prayers that have already passed are drawn with this color at reduced
+  /// opacity. Defaults to a light ghost-white when `null`.
+  final Color? salatIconBackground;
 
   /// The primary background color of the widget container.
   ///

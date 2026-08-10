@@ -27,6 +27,7 @@ class IbadahWidget extends StatefulWidget {
     required this.currentLocale,
     this.supportedLocals = const ['en'],
     this.ibadahStrings = const [IbadahStrings()],
+    this.useGradient = false,
   })  : assert(
           supportedLocals.length == ibadahStrings.length,
           'supportedLocals and ibadahStrings must have the same length',
@@ -40,6 +41,7 @@ class IbadahWidget extends StatefulWidget {
   final List<IbadahStrings> ibadahStrings;
   final List<String> supportedLocals;
   final String currentLocale;
+  final bool useGradient;
 
   @override
   State<IbadahWidget> createState() => _IbadahWidgetState();
@@ -95,7 +97,9 @@ class _IbadahWidgetState extends State<IbadahWidget>
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: widget.ibadahTheme.foregroundOnPrimary,
+          gradient:
+              widget.useGradient ? widget.ibadahTheme.backgroundGradient : null,
+          color: widget.useGradient ? null : widget.ibadahTheme.backgroundColor,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: widget.ibadahTheme.border,

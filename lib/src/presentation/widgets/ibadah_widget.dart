@@ -243,10 +243,7 @@ class _IbadahWidgetState extends State<IbadahWidget>
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withValues(alpha: .5),
+                          color: widget.ibadahTheme.border,
                         ),
                       ),
                       child: Padding(

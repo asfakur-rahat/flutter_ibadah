@@ -1,3 +1,7 @@
+## 0.1.0
+
+- Replaced hardcoded border color in IbadahWidget with widget
+
 ## 0.0.9
 
 - Add `IbadahTheme.backgroundGradient` and the `IbadahWidget.useGradient` flag for gradient backgrounds

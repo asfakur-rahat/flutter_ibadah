@@ -190,7 +190,7 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge
-                    ?.copyWith(color: Colors.grey[500]),
+                    ?.copyWith(color: widget.ibadahTheme.currentPrayerColor),
               ),
             ],
           );

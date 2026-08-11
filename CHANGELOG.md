@@ -1,3 +1,7 @@
+## 0.1.1
+
+- Updated `NextPrayerWidget` to use `currentPrayerColor` from the theme instead of a hardcoded grey color.
+
 ## 0.1.0
 
 - Replaced hardcoded border color in IbadahWidget with widget

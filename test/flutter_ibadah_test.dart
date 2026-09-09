@@ -33,5 +33,58 @@ void main() {
       );
       expect(find.byType(IbadahWidget), findsOneWidget);
     });
+
+    testWidgets('attaches and detaches the controller it is given',
+        (WidgetTester tester) async {
+      final controller = IbadahController();
+      addTearDown(controller.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: IbadahWidget(
+                controller: controller,
+                ibadahTheme: IbadahTheme.light(),
+                currentLocale: 'en',
+              ),
+            ),
+          ),
+        ),
+      );
+      expect(controller.isAttached, isTrue);
+
+      await tester.pumpWidget(const MaterialApp(home: Scaffold()));
+      expect(controller.isAttached, isFalse);
+    });
+
+    testWidgets('swapping the controller re-attaches',
+        (WidgetTester tester) async {
+      final first = IbadahController();
+      final second = IbadahController();
+      addTearDown(first.dispose);
+      addTearDown(second.dispose);
+
+      Widget build(IbadahController controller) => MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: IbadahWidget(
+                  controller: controller,
+                  ibadahTheme: IbadahTheme.light(),
+                  currentLocale: 'en',
+                ),
+              ),
+            ),
+          );
+
+      await tester.pumpWidget(build(first));
+      expect(first.isAttached, isTrue);
+
+      await tester.pumpWidget(build(second));
+      expect(first.isAttached, isFalse);
+      expect(second.isAttached, isTrue);
+
+      await tester.pumpWidget(const MaterialApp(home: Scaffold()));
+    });
   });
 }

@@ -1,3 +1,13 @@
+## 0.2.0
+
+- Add `IbadahController` so host apps can trigger a refresh on demand (`controller.refresh()`) and observe the fetch state (`status`, `district`, `lastUpdated`, `errorMessage`); pass it via the new `IbadahWidget.controller` parameter
+- Fix: a failed prayer-time fetch is no longer permanent. The widget now retries automatically on a 15s/30s/1m/2m/5m backoff, so it recovers on its own once connectivity returns instead of staying empty until the app restarts or the district changes
+- Fix: the timetable now refetches just after midnight, so a long-running app no longer keeps showing the previous day's times
+- Show the failure instead of swallowing it: a retry button appears when a fetch fails, and a spinner while one is in flight. Previously fetched times stay visible during a failure
+- `SalatTimeFetchFailed` now carries the failure message; overlapping fetches are dropped rather than raced
+- Add the `retry` string to `IbadahStrings` (defaults to `'Retry'`)
+- Fix `IbadahWidget.dispose` calling `super.dispose()` first and leaking two `ValueNotifier`s
+
 ## 0.1.1
 
 - Updated `NextPrayerWidget` to use `currentPrayerColor` from the theme instead of a hardcoded grey color.

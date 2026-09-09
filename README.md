@@ -14,6 +14,8 @@ A beautiful, customizable Flutter widget for displaying Islamic prayer times wit
 - 📍 District/location selection
 - 📱 Responsive design
 - 🌓 Built-in light and dark themes
+- 🔄 Automatic recovery: retries a failed fetch with backoff and refetches at midnight
+- 🎛️ `IbadahController` for manual refresh (pull-to-refresh, app resume, your own connectivity listener)
 
 ## Installation 💻
 
@@ -221,8 +223,76 @@ IbadahStrings(
   am: 'AM',
   pm: 'PM',
   searchHintText: 'Search district',
+  retry: 'Retry',
 )
 ```
+
+## Refreshing 🔄
+
+The widget fetches prayer times when it first mounts and whenever the user
+picks a different district. On top of that it keeps itself current on its own:
+
+- **Automatic retry.** If a fetch fails (typically no internet) the widget
+  shows the error with a **Retry** button and retries in the background on a
+  15s → 30s → 1m → 2m → 5m backoff, staying at five minutes thereafter. When
+  connectivity comes back the times appear without any user action. Times that
+  were already fetched stay on screen while this happens.
+- **Date rollover.** A timer just past local midnight refetches the timetable
+  for the new day, so a long-running app never shows yesterday's times.
+
+### Manual refresh with `IbadahController`
+
+Pass an `IbadahController` to refresh on demand and to observe the fetch state:
+
+```dart
+class _MyPageState extends State<MyPage> {
+  final ibadahController = IbadahController();
+
+  @override
+  void dispose() {
+    ibadahController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+      onRefresh: ibadahController.refresh,
+      child: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: [
+          IbadahWidget(
+            controller: ibadahController,
+            ibadahTheme: IbadahTheme.light(),
+            currentLocale: 'en',
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+`IbadahController` is a `ChangeNotifier`, so you can rebuild on its state:
+
+```dart
+ListenableBuilder(
+  listenable: ibadahController,
+  builder: (context, _) => Text('${ibadahController.status.name}'),
+);
+```
+
+| Member | Type | Description |
+|--------|------|-------------|
+| `refresh()` | `Future<void>` | Refetches the current district. The future completes when the fetch settles (success or failure), so it is safe to `await` from a `RefreshIndicator`. No-op while detached. |
+| `status` | `IbadahFetchStatus` | `initial`, `loading`, `success` or `failure` |
+| `district` | `String?` | District the widget last fetched for |
+| `lastUpdated` | `DateTime?` | Time of the last successful fetch; unchanged by a later failure |
+| `errorMessage` | `String?` | Failure reason, or `null` when the last fetch did not fail |
+| `isAttached` | `bool` | Whether a mounted `IbadahWidget` is using this controller |
+
+Dispose the controller with your own `State`. A controller can drive only one
+`IbadahWidget` at a time.
 
 ## API Reference
 
@@ -237,6 +307,7 @@ The main widget that displays prayer times.
 | ibadahTheme | IbadahTheme | Yes | Theme configuration |
 | ibadahStrings | List<IbadahStrings> | Yes | List of string translations |
 | useGradient | bool | No | Paint `ibadahTheme.backgroundGradient` instead of `backgroundColor` (default `false`) |
+| controller | IbadahController? | No | Handle for triggering a manual refresh and observing fetch state |
 
 ### IbadahTheme.fromSeed()
 

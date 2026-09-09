@@ -22,6 +22,7 @@ import 'ibadah_defaults.dart';
 /// // defaultStrings.am == 'AM'
 /// // defaultStrings.pm == 'PM'
 /// // defaultStrings.searchHintText == 'Search district'
+/// // defaultStrings.retry == 'Retry'
 /// ```
 class IbadahStrings {
   /// Creates an instance of [IbadahStrings] with customizable string values.
@@ -46,6 +47,7 @@ class IbadahStrings {
   ///   am: 'সকাল',
   ///   pm: 'বিকাল',
   ///   searchHintText: 'জেলা খুঁজুন',
+  ///   retry: 'আবার চেষ্টা করুন',
   /// );
   /// ```
   const IbadahStrings({
@@ -63,6 +65,7 @@ class IbadahStrings {
     this.am = amDefault,
     this.pm = pmDefault,
     this.searchHintText = searchHintTextDefault,
+    this.retry = retryDefault,
   });
 
   /// The app name or title.
@@ -120,4 +123,8 @@ class IbadahStrings {
   /// Hint text for search input fields.
   /// Default: 'Search district'
   final String searchHintText;
+
+  /// Label for the button that retries a failed prayer-time fetch.
+  /// Default: 'Retry'
+  final String retry;
 }

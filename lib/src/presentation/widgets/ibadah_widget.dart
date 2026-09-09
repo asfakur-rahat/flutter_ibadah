@@ -9,7 +9,6 @@ import 'package:flutter_ibadah/src/core/utils/svg_color_mapper.dart';
 import 'package:flutter_ibadah/src/domain/entities/salat_time_table_entity.dart';
 import 'package:flutter_ibadah/src/presentation/bloc/ibadah_bloc.dart';
 import 'package:flutter_ibadah/src/presentation/core/ibadah_controller.dart';
-import 'package:flutter_ibadah/src/presentation/core/ibadah_refresh_handle.dart';
 import 'package:flutter_ibadah/src/presentation/core/ibadah_strings.dart';
 import 'package:flutter_ibadah/src/presentation/core/ibadah_theme.dart';
 import 'package:flutter_ibadah/src/presentation/widgets/district_selection_bottom_sheet.dart';

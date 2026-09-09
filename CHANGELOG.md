@@ -1,3 +1,11 @@
+## 0.2.1
+
+- Widen the `flutter_bloc` constraint to `>=8.1.6 <10.0.0` so the package
+  supports flutter_bloc 9.x (verified against 9.1.1 and the 8.1.6 lower bound)
+- Drop the `meta` dependency and the `@internal` annotations on
+  `IbadahController.attach`/`detach`/`sync`; they are now plain public members
+  documented as called by `IbadahWidget`, mirroring `ScrollController.attach`
+
 ## 0.2.0
 
 - Add `IbadahController` so host apps can trigger a refresh on demand (`controller.refresh()`) and observe the fetch state (`status`, `district`, `lastUpdated`, `errorMessage`); pass it via the new `IbadahWidget.controller` parameter

@@ -1,9 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
-import 'package:meta/meta.dart';
-
-import 'ibadah_refresh_handle.dart';
 
 /// The state of the most recent prayer-time fetch performed by an
 /// [IbadahWidget].
@@ -38,6 +35,16 @@ const List<Duration> _retryDelays = [
 Duration ibadahRetryDelay(int attempt) {
   final index = math.max(0, math.min(attempt, _retryDelays.length - 1));
   return _retryDelays[index];
+}
+
+/// The hook an `IbadahWidget` hands to its [IbadahController] so the
+/// controller can drive it without depending on widget internals.
+///
+/// Implemented by the widget's [State]; you should not need to implement or
+/// use this yourself.
+abstract class IbadahRefreshHandle {
+  /// Re-fetches the timetable for the currently selected district.
+  Future<void> refreshSalatTime();
 }
 
 /// A handle that lets the host application drive an [IbadahWidget].
@@ -116,8 +123,10 @@ class IbadahController extends ChangeNotifier {
     await handle.refreshSalatTime();
   }
 
-  /// Attaches this controller to an [IbadahWidget]. Called by the widget.
-  @internal
+  /// Attaches this controller to an [IbadahWidget].
+  ///
+  /// Called automatically by [IbadahWidget] when it mounts. You should not
+  /// call this directly.
   void attach(IbadahRefreshHandle handle) {
     assert(
       _handle == null,
@@ -127,14 +136,18 @@ class IbadahController extends ChangeNotifier {
     _handle = handle;
   }
 
-  /// Detaches this controller. Called by the widget when it is disposed.
-  @internal
+  /// Detaches this controller from an [IbadahWidget].
+  ///
+  /// Called automatically by [IbadahWidget] when it is disposed. You should
+  /// not call this directly.
   void detach(IbadahRefreshHandle handle) {
     if (identical(_handle, handle)) _handle = null;
   }
 
   /// Pushes the widget's latest fetch state into this controller.
-  @internal
+  ///
+  /// Called automatically by [IbadahWidget] as a fetch progresses. You should
+  /// not call this directly.
   void sync({
     required IbadahFetchStatus status,
     String? district,

@@ -38,6 +38,14 @@ identically, because the new parameters default to the old behaviour.
   `IbadahStrings.locationNotFound`
 - The cached location is dropped when it is not in the host's `locations` list,
   instead of leaving an unreachable city selected
+- **The published archive was 32 MB instead of ~1 MB.** The root `.pubignore`
+  added in 0.2.1 *replaces* `.gitignore` for `pub publish` rather than adding to
+  it, so `build/` and `.dart_tool/` — including two ~50 MB `.dill` caches — were
+  shipped to every consumer. `.pubignore` now restates those exclusions, and
+  `CLAUDE.md` and `flutter_ibadah.iml` are no longer published either
+- `CommonUtils.getIbadahString` threw a `RangeError` in release builds when
+  `currentLocale` was not in `supportedLocals` (the guarding assert is stripped
+  outside debug); it now falls back to the first `IbadahStrings` entry
 
 ### Changed
 
@@ -47,30 +55,19 @@ identically, because the new parameters default to the old behaviour.
   works and returns the city name. It will be removed in 1.0.0
 - The location picker shows the country as a subtitle when the list spans more
   than one
+- Raise `flutter_lints` to ^6.0.0 and widen `equatable` to `>=2.0.7 <4.0.0`
+  (resolves equatable 3.0.0, flutter_svg 2.3.0)
+- Drop the unused `flutter: generate: true` flag — the package has no `l10n.yaml`
+  or ARB files; localization is the hand-rolled `IbadahStrings`
+- Example app: Gradle 8.12 → 8.14, AGP 8.7.3 → 8.11.1, Kotlin 2.1.0 → 2.2.20 and
+  Java 11 → 17, clearing the "support will soon be dropped" warnings on
+  Flutter 3.44
 
 ### Migration
 
 Nothing is required. To go global, pass `locations` (and usually
 `calculationMethod`) — see the README. Any existing cached district is migrated
 to `IbadahLocation(city: <district>, country: 'Bangladesh')` automatically.
-
-## 0.2.2
-
-- Fix: the published archive was 32 MB instead of ~655 KB. The root `.pubignore`
-  added in 0.2.1 *replaces* `.gitignore` for `pub publish` rather than adding to
-  it, so `build/` and `.dart_tool/` (including two ~50 MB `.dill` caches) were
-  shipped to every consumer. `.pubignore` now restates those exclusions
-- Fix: `CommonUtils.getIbadahString` threw a `RangeError` in release builds when
-  `currentLocale` was not in `supportedLocals` (the guarding assert is stripped
-  outside debug); it now falls back to the first `IbadahStrings` entry
-- `CLAUDE.md` and `flutter_ibadah.iml` are no longer published to pub.dev
-- Raise `flutter_lints` to ^6.0.0 and widen `equatable` to `>=2.0.7 <4.0.0`
-  (resolves equatable 3.0.0, flutter_svg 2.3.0)
-- Drop the unused `flutter: generate: true` flag — the package has no `l10n.yaml`
-  or ARB files; localization is the hand-rolled `IbadahStrings`
-- Example app: Gradle 8.12 -> 8.14, AGP 8.7.3 -> 8.11.1, Kotlin 2.1.0 -> 2.2.20,
-  Java 11 -> 17, clearing the "support will soon be dropped" warnings on
-  Flutter 3.44
 
 ## 0.2.1
 

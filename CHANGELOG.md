@@ -1,3 +1,20 @@
+## 0.3.1
+
+- Fix: opening the location picker tripped a framework assertion on Flutter
+  3.44 — *"ListTile background color or ink splashes may be invisible"*. The
+  sheet's rows were wrapped in a `ColoredBox`, which sits between them and the
+  nearest `Material`, so their ink splashes painted behind an opaque box. It is
+  now a `Material` of the same colour, which both paints the background and
+  gives the rows something to ripple on. Debug-only assertion, but the missing
+  tap feedback was real in release builds too
+- Fix: selecting a location threw a `LateError` when the on-device cache was
+  unavailable — `HiveService` used a `late` box that was only assigned on a
+  successful `init()`. The cache is a convenience, so every accessor now
+  tolerates a box that was never opened (an unwritable documents directory, a
+  corrupt file, a host that never initialises Hive) and prayer times still load
+- Add widget tests that actually open the picker. Nothing in the suite reached
+  it before, which is how both bugs above shipped in 0.3.0
+
 ## 0.3.0
 
 Prayer times for any city in the world, not just Bangladesh. **No breaking

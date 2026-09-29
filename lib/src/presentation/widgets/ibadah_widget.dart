@@ -209,8 +209,14 @@ class _IbadahWidgetState extends State<IbadahWidget>
   }
 
   void _initHive() async {
-    await Hive.initFlutter();
-    await HiveService.instance.init();
+    // A cache failure must not stop the fetch — prayer times still work
+    // without a remembered location.
+    try {
+      await Hive.initFlutter();
+      await HiveService.instance.init();
+    } catch (e) {
+      CommonUtils.debugLog('Ibadah cache unavailable: $e');
+    }
     if (!mounted) return;
     _initSalatTime();
   }
@@ -524,7 +530,11 @@ class _IbadahWidgetState extends State<IbadahWidget>
                                         ),
                                       ),
                                       Flexible(
-                                        child: ColoredBox(
+                                        // Material, not ColoredBox: the sheet's
+                                        // ListTiles paint their ink splashes on
+                                        // the nearest Material ancestor, and an
+                                        // opaque box in between hides them.
+                                        child: Material(
                                           color: widget
                                               .ibadahTheme.foregroundOnPrimary,
                                           child: LocationSelectionBottomSheet(

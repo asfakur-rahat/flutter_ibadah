@@ -150,6 +150,11 @@ class DioService {
             errorMessage = descriptions.join("\n ");
           }
         }
+      } else if (responseData is String && responseData.trim().isNotEmpty) {
+        // The prayer-time API reports an unresolvable address as a 400 whose
+        // body is a bare string ("Unable to geocode address: ..."), not the
+        // {"errors": [...]} envelope handled above.
+        errorMessage = responseData.trim();
       } else {
         if (e.response?.statusCode == 429) {
           errorMessage =

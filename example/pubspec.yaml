@@ -1,5 +1,5 @@
 name: flutter_ibadah_example
-description: "Example app demonstrating flutter_ibadah package usage."
+description: "Example app demonstrating flutter_ibadah: worldwide prayer times, calculation methods and theming."
 publish_to: 'none'
 version: 1.0.0+1
 

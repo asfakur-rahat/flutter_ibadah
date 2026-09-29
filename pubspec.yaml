@@ -1,6 +1,6 @@
 name: flutter_ibadah
-description: "A Flutter package for showing Bangladeshi salah time."
-version: 0.2.1
+description: "A customizable Flutter widget showing Islamic prayer times for any city worldwide."
+version: 0.3.0
 
 environment:
   sdk: ^3.5.0
@@ -12,18 +12,17 @@ dependencies:
   dio: ^5.9.0
   flutter_svg: ^2.2.1
   flutter_bloc: '>=8.1.6 <10.0.0'
-  equatable: ^2.0.7
+  equatable: '>=2.0.7 <4.0.0'
   hive_flutter: ^1.1.0
   intl: '>=0.19.0 <0.21.0'
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
-  generate: true
 
   # To add assets to your package, add an assets section, like this:
   assets:
@@ -59,6 +58,18 @@ flutter:
           style: italic
         - asset: assets/fonts/satoshi/Satoshi-Regular.ttf
           weight: 400
+
+screenshots:
+  - description: 'Prayer times and the next-prayer countdown for Dhaka, Bangladesh.'
+    path: doc/screenshots/01_dhaka.png
+  - description: 'Any city worldwide — Toronto, rendered in Toronto time even when the device is not.'
+    path: doc/screenshots/02_toronto.png
+  - description: 'Dark theme, showing Mecca with the Umm al-Qura calculation method.'
+    path: doc/screenshots/03_mecca_dark.png
+  - description: 'Localized strings and digits — Cairo in Arabic with Arabic-Indic numerals.'
+    path: doc/screenshots/04_cairo_arabic.png
+  - description: 'Theming with IbadahTheme.fromSeed(), showing Istanbul.'
+    path: doc/screenshots/05_istanbul_seeded.png
 
 homepage: https://github.com/asfakur-rahat/flutter_ibadah
 repository: https://github.com/asfakur-rahat/flutter_ibadah

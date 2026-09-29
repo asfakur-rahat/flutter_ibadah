@@ -33,6 +33,54 @@ void main() {
       expect(model.isFriday, false);
     });
 
+    test('records the city UTC offset from the ISO8601 response', () {
+      final toronto = Map<String, String>.from(json).map(
+        (k, v) => MapEntry(k, v.replaceFirst('.000', '-04:00')),
+      );
+      final model = SalatTimeTableModel.fromJson(toronto, false);
+      expect(model.utcOffset, const Duration(hours: -4));
+    });
+
+    test('records a positive offset', () {
+      final dhaka = Map<String, String>.from(json).map(
+        (k, v) => MapEntry(k, v.replaceFirst('.000', '+06:00')),
+      );
+      expect(
+        SalatTimeTableModel.fromJson(dhaka, false).utcOffset,
+        const Duration(hours: 6),
+      );
+    });
+
+    test('parseUtcOffset handles Z, half-hour zones and missing offsets', () {
+      expect(
+        SalatTimeTableModel.parseUtcOffset('2026-09-29T04:30:00Z'),
+        Duration.zero,
+      );
+      expect(
+        SalatTimeTableModel.parseUtcOffset('2026-09-29T04:30:00+05:45'),
+        const Duration(hours: 5, minutes: 45),
+      );
+      expect(
+        SalatTimeTableModel.parseUtcOffset('2026-09-29T04:30:00-03:30'),
+        const Duration(hours: -3, minutes: -30),
+      );
+      expect(
+        SalatTimeTableModel.parseUtcOffset('2026-09-29T04:30:00.000'),
+        Duration.zero,
+      );
+      expect(SalatTimeTableModel.parseUtcOffset(null), Duration.zero);
+    });
+
+    test('DateTime.parse discards the offset, which is why we keep it', () {
+      // This is the premise the whole timezone handling rests on: an
+      // offset-bearing timestamp comes back as a UTC instant, so the city's
+      // offset has to be read off the raw string before parsing.
+      final parsed = DateTime.parse('2026-09-29T05:37:00-04:00');
+      expect(parsed.isUtc, isTrue);
+      expect(parsed.timeZoneOffset, Duration.zero);
+      expect(parsed, DateTime.utc(2026, 9, 29, 9, 37));
+    });
+
     test('copyWith returns updated model', () {
       final model = SalatTimeTableModel.fromJson(json, false);
       final updated =

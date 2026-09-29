@@ -11,5 +11,6 @@ const upcomingDefault = 'Upcoming';
 const startInDefault = 'Start in';
 const amDefault = 'AM';
 const pmDefault = 'PM';
-const searchHintTextDefault = 'Search district';
+const searchHintTextDefault = 'Search location';
 const retryDefault = 'Retry';
+const locationNotFoundDefault = 'Could not find that location';

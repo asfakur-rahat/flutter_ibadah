@@ -16,6 +16,10 @@ class SalahTimeWidget extends StatelessWidget {
   final String currentLocale;
   final String currentPrayer;
 
+  /// UTC offset of the city these times belong to, so they render in its
+  /// wall clock rather than the device's.
+  final Duration? utcOffset;
+
   const SalahTimeWidget({
     super.key,
     required this.iconPath,
@@ -26,6 +30,7 @@ class SalahTimeWidget extends StatelessWidget {
     required this.supportedLocals,
     required this.ibadahStrings,
     required this.currentPrayer,
+    this.utcOffset,
   });
 
   bool _isActive(DateTime? time) {
@@ -106,6 +111,7 @@ class SalahTimeWidget extends StatelessWidget {
                   ibadahStrings: ibadahStrings,
                   currentLocale: currentLocale,
                 ).pm,
+                utcOffset: utcOffset,
               ),
               locale: currentLocale,
             ),

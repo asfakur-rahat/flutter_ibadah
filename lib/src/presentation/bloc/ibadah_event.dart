@@ -5,12 +5,16 @@ sealed class IbadahEvent extends Equatable {
 }
 
 class FetchSalatTime extends IbadahEvent {
-  final String district;
+  final IbadahLocation location;
+  final IbadahCalculationMethod method;
+  final IbadahSchool school;
 
   const FetchSalatTime({
-    required this.district,
+    required this.location,
+    required this.method,
+    required this.school,
   });
 
   @override
-  List<Object?> get props => [district];
+  List<Object?> get props => [location, method, school];
 }

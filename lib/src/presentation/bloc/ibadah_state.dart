@@ -29,6 +29,7 @@ final class SalatTimeFetchFailed extends IbadahState {
   const SalatTimeFetchFailed({
     required this.message,
     required this.failedAt,
+    this.isLocationError = false,
   });
 
   /// Why the fetch failed, as reported by the network layer.
@@ -41,6 +42,13 @@ final class SalatTimeFetchFailed extends IbadahState {
   /// automatic retry loop in `IbadahWidget`.
   final DateTime failedAt;
 
+  /// Whether the API rejected the location itself rather than failing for a
+  /// transport reason — an unresolvable city/country pair comes back as a 400.
+  ///
+  /// The widget shows a location-specific message for these, since retrying
+  /// the same address will never succeed.
+  final bool isLocationError;
+
   @override
-  List<Object?> get props => [message, failedAt];
+  List<Object?> get props => [message, failedAt, isLocationError];
 }

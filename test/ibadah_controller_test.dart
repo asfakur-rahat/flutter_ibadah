@@ -74,12 +74,13 @@ void main() {
       final at = DateTime(2026, 1, 1, 5, 30);
       controller.sync(
         status: IbadahFetchStatus.success,
-        district: 'Sylhet',
+        location: const IbadahLocation(city: 'Sylhet', country: 'Bangladesh'),
         lastUpdated: at,
       );
 
       expect(controller.status, IbadahFetchStatus.success);
-      expect(controller.district, 'Sylhet');
+      expect(controller.location,
+          const IbadahLocation(city: 'Sylhet', country: 'Bangladesh'));
       expect(controller.lastUpdated, at);
       expect(controller.errorMessage, isNull);
       expect(notifications, 1);
@@ -87,14 +88,14 @@ void main() {
       // Same values again: no further notification.
       controller.sync(
         status: IbadahFetchStatus.success,
-        district: 'Sylhet',
+        location: const IbadahLocation(city: 'Sylhet', country: 'Bangladesh'),
         lastUpdated: at,
       );
       expect(notifications, 1);
 
       controller.sync(
         status: IbadahFetchStatus.failure,
-        district: 'Sylhet',
+        location: const IbadahLocation(city: 'Sylhet', country: 'Bangladesh'),
         lastUpdated: at,
         errorMessage: 'No Internet Connection',
       );

@@ -1,3 +1,77 @@
+## 0.3.0
+
+Prayer times for any city in the world, not just Bangladesh. **No breaking
+changes** — every existing `IbadahWidget(...)` keeps compiling and behaving
+identically, because the new parameters default to the old behaviour.
+
+### Added
+
+- `IbadahWidget.locations` — the places a user can pick between, as
+  `List<IbadahLocation>`. Defaults to `bangladeshDistricts` (the same 64
+  districts as before), so omitting it changes nothing
+- `IbadahLocation(city:, country:, label:)`, a new public type. `label` lets the
+  displayed name differ from what is sent to the API
+- `IbadahWidget.initialLocation` — the location shown on first run. Defaults to
+  Dhaka when it is in `locations`, otherwise the first entry
+- `IbadahWidget.calculationMethod` and `IbadahWidget.school`, exposing all 24
+  calculation methods (`IbadahCalculationMethod`) and both Asr schools
+  (`IbadahSchool`). Default to Karachi/Hanafi, which is what the package sent
+  before
+- `IbadahController.location` (an `IbadahLocation?`), and a new
+  `IbadahStrings.locationNotFound` string
+- Arabic, Persian and Urdu digits in the number map, alongside English and Bangla
+
+### Fixed
+
+- **Prayer times now render in the selected city's timezone, not the device's.**
+  Previously every time was `toLocal()`-ed, which was invisible while all 64
+  districts shared UTC+6 but wrong as soon as a city in another zone was picked.
+  The city's UTC offset is now read off the ISO8601 response and carried on
+  `SalatTimeTableEntity.utcOffset`. The midnight refetch and the past/upcoming
+  styling follow the city's calendar day too. The countdown was already correct,
+  as it compares absolute instants
+- The request URL is built with `Uri` instead of string interpolation, so cities
+  and countries containing spaces or apostrophes — "Cox's Bazar", "Saudi Arabia"
+  — are escaped rather than sent raw
+- An address the API cannot geocode comes back as a 400 whose body is a bare
+  string; this used to surface as "Unknown Error Occurred" and now shows
+  `IbadahStrings.locationNotFound`
+- The cached location is dropped when it is not in the host's `locations` list,
+  instead of leaving an unreachable city selected
+
+### Changed
+
+- `IbadahStrings.searchHintText` now defaults to `'Search location'`
+  (was `'Search district'`). The field name is unchanged
+- `IbadahController.district` is deprecated in favour of `location`; it still
+  works and returns the city name. It will be removed in 1.0.0
+- The location picker shows the country as a subtitle when the list spans more
+  than one
+
+### Migration
+
+Nothing is required. To go global, pass `locations` (and usually
+`calculationMethod`) — see the README. Any existing cached district is migrated
+to `IbadahLocation(city: <district>, country: 'Bangladesh')` automatically.
+
+## 0.2.2
+
+- Fix: the published archive was 32 MB instead of ~655 KB. The root `.pubignore`
+  added in 0.2.1 *replaces* `.gitignore` for `pub publish` rather than adding to
+  it, so `build/` and `.dart_tool/` (including two ~50 MB `.dill` caches) were
+  shipped to every consumer. `.pubignore` now restates those exclusions
+- Fix: `CommonUtils.getIbadahString` threw a `RangeError` in release builds when
+  `currentLocale` was not in `supportedLocals` (the guarding assert is stripped
+  outside debug); it now falls back to the first `IbadahStrings` entry
+- `CLAUDE.md` and `flutter_ibadah.iml` are no longer published to pub.dev
+- Raise `flutter_lints` to ^6.0.0 and widen `equatable` to `>=2.0.7 <4.0.0`
+  (resolves equatable 3.0.0, flutter_svg 2.3.0)
+- Drop the unused `flutter: generate: true` flag — the package has no `l10n.yaml`
+  or ARB files; localization is the hand-rolled `IbadahStrings`
+- Example app: Gradle 8.12 -> 8.14, AGP 8.7.3 -> 8.11.1, Kotlin 2.1.0 -> 2.2.20,
+  Java 11 -> 17, clearing the "support will soon be dropped" warnings on
+  Flutter 3.44
+
 ## 0.2.1
 
 - Widen the `flutter_bloc` constraint to `>=8.1.6 <10.0.0` so the package

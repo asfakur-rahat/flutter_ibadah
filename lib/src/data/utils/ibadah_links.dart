@@ -1,3 +1,6 @@
+import '../../presentation/core/ibadah_calculation.dart';
+import '../../presentation/core/ibadah_location.dart';
+
 class IbadahLinks {
   static final _instance = IbadahLinks._();
 
@@ -7,13 +10,23 @@ class IbadahLinks {
 
   final String baseUrl = "https://api.aladhan.com/v1";
 
-  /// Get the salat time URL by district.
-  String getSalatTimeUrlByDistrict({
+  /// Builds the timetable URL for [location] on [date] (`dd-MM-yyyy`).
+  ///
+  /// Query parameters are built through [Uri] rather than interpolated, so
+  /// cities and countries containing spaces or apostrophes — "Cox's Bazar",
+  /// "Saudi Arabia" — are escaped correctly.
+  String getSalatTimeUrl({
     required String date,
-    required String district,
+    required IbadahLocation location,
+    required IbadahCalculationMethod method,
+    required IbadahSchool school,
   }) =>
-      "$baseUrl/timingsByAddress/$date?address=$district,Bangladesh&iso8601=true&method=1&school=1";
+      Uri.parse("$baseUrl/timingsByAddress/$date").replace(
+        queryParameters: {
+          'address': location.address,
+          'iso8601': 'true',
+          'method': '${method.id}',
+          'school': '${school.id}',
+        },
+      ).toString();
 }
-//&timezonestring=UTC
-// https://api.aladhan.com/v1/timingsByCity?city=Dhaka&country=Bangladesh&method=1&school=0&tune=0,2,0,1,1,0,0,2,0
-//"$baseUrl/timingsByCity/$date?city=$district&country=Bangladesh&iso8601=true&method=1&school=0&tune=0,2,0,1,1,0,0,2,0"

@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 
+import 'ibadah_location.dart';
+
 /// The state of the most recent prayer-time fetch performed by an
 /// [IbadahWidget].
 enum IbadahFetchStatus {
@@ -85,17 +87,26 @@ class IbadahController extends ChangeNotifier {
   IbadahRefreshHandle? _handle;
 
   IbadahFetchStatus _status = IbadahFetchStatus.initial;
-  String? _district;
+  IbadahLocation? _location;
   DateTime? _lastUpdated;
   String? _errorMessage;
 
   /// The state of the most recent fetch.
   IbadahFetchStatus get status => _status;
 
-  /// The district the widget last fetched prayer times for.
+  /// The location the widget last fetched prayer times for.
   ///
   /// `null` until the first fetch is dispatched.
-  String? get district => _district;
+  IbadahLocation? get location => _location;
+
+  /// The city the widget last fetched prayer times for.
+  ///
+  /// `null` until the first fetch is dispatched.
+  @Deprecated(
+    'The widget is no longer Bangladesh-only, so a bare city name is '
+    'ambiguous. Use `location` instead. This will be removed in 1.0.0.',
+  )
+  String? get district => _location?.city;
 
   /// When the timetable was last fetched successfully.
   ///
@@ -111,7 +122,7 @@ class IbadahController extends ChangeNotifier {
   /// [refresh] does nothing while this is `false`.
   bool get isAttached => _handle != null;
 
-  /// Re-fetches the prayer timetable for the current district.
+  /// Re-fetches the prayer timetable for the current location.
   ///
   /// The returned future completes once the fetch settles, whether it
   /// succeeded or failed, which makes it safe to `await` from a
@@ -150,16 +161,16 @@ class IbadahController extends ChangeNotifier {
   /// not call this directly.
   void sync({
     required IbadahFetchStatus status,
-    String? district,
+    IbadahLocation? location,
     DateTime? lastUpdated,
     String? errorMessage,
   }) {
     final changed = _status != status ||
-        _district != district ||
+        _location != location ||
         _lastUpdated != lastUpdated ||
         _errorMessage != errorMessage;
     _status = status;
-    _district = district;
+    _location = location;
     _lastUpdated = lastUpdated;
     _errorMessage = errorMessage;
     if (changed) notifyListeners();

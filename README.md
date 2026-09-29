@@ -3,15 +3,25 @@
 [![Pub Version](https://img.shields.io/pub/v/flutter_ibadah?style=for-the-badge)](https://pub.dev/packages/flutter_ibadah)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-A beautiful, customizable Flutter widget for displaying Islamic prayer times with support for multiple languages and locations. This widget provides a complete prayer time solution that can be easily integrated into any Flutter application.
+A beautiful, customizable Flutter widget for displaying Islamic prayer times with support for multiple languages and locations. Works for **any city in any country**, and can be easily integrated into any Flutter application.
+
+| Dhaka, Bangladesh | Toronto, Canada | Mecca, dark theme | Cairo, in Arabic |
+|:---:|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/asfakur-rahat/flutter_ibadah/main/doc/screenshots/raw/01_dhaka.png" width="200" alt="Prayer times for Dhaka with the next-prayer countdown"> | <img src="https://raw.githubusercontent.com/asfakur-rahat/flutter_ibadah/main/doc/screenshots/raw/02_toronto.png" width="200" alt="Toronto prayer times, rendered in Toronto time"> | <img src="https://raw.githubusercontent.com/asfakur-rahat/flutter_ibadah/main/doc/screenshots/raw/03_mecca_dark.png" width="200" alt="Mecca prayer times on the dark theme"> | <img src="https://raw.githubusercontent.com/asfakur-rahat/flutter_ibadah/main/doc/screenshots/raw/04_cairo_arabic.png" width="200" alt="Cairo prayer times with Arabic strings and digits"> |
+
+*All four are the same widget on the same device — only `locations`,
+`calculationMethod`, `currentLocale` and `ibadahTheme` differ.*
 
 ## Features ✨
 
 - 🕌 Displays all five daily prayer times
 - ⏳ Shows next prayer with countdown
-- 🌍 Multi-language support
+- 🌍 Worldwide: any city, any country — supply your own location list
+- 🕰️ Times render in the **selected city's** timezone, not the device's
+- 🧭 24 calculation methods and both Asr schools
+- 🌐 Multi-language support, including localized digits (en, bn, ar, fa, ur)
 - 🎨 Customizable theming with seed color support
-- 📍 District/location selection
+- 📍 Searchable location selection
 - 📱 Responsive design
 - 🌓 Built-in light and dark themes
 - 🔄 Automatic recovery: retries a failed fetch with backoff and refetches at midnight
@@ -63,6 +73,71 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+
+### Choosing locations 🌍
+
+With no `locations`, the widget offers the 64 districts of Bangladesh and opens
+on Dhaka — the behaviour it has always had. Pass your own list to show anywhere
+in the world:
+
+```dart
+IbadahWidget(
+  currentLocale: 'en',
+  ibadahTheme: IbadahTheme.light(),
+  locations: const [
+    IbadahLocation(city: 'Mecca', country: 'Saudi Arabia'),
+    IbadahLocation(city: 'Istanbul', country: 'Turkey'),
+    IbadahLocation(city: 'Toronto', country: 'Canada'),
+    IbadahLocation(city: 'Jakarta', country: 'Indonesia'),
+  ],
+  initialLocation: const IbadahLocation(city: 'Mecca', country: 'Saudi Arabia'),
+  calculationMethod: IbadahCalculationMethod.ummAlQura,
+  school: IbadahSchool.shafi,
+)
+```
+
+`city` and `country` are sent to the prayer-time API as a `"<city>,<country>"`
+address, so spell them the way a geocoder expects — English names work best.
+Use `label` when the text shown to the user should differ from what is sent:
+
+```dart
+const IbadahLocation(city: 'Dhaka', country: 'Bangladesh', label: 'ঢাকা')
+```
+
+The default list is exported as `bangladeshDistricts`, so you can extend rather
+than replace it:
+
+```dart
+locations: const [
+  ...bangladeshDistricts,
+  IbadahLocation(city: 'Mecca', country: 'Saudi Arabia'),
+],
+```
+
+### Calculation method and school 🧭
+
+Fajr and Isha depend on whose solar angles you follow, and Asr on the juristic
+school. Both default to the South Asian convention
+(`IbadahCalculationMethod.karachi` and `IbadahSchool.hanafi`), so existing code
+is unaffected. Set them to match your users' local mosques:
+
+| Region | Typical setting |
+|--------|-----------------|
+| Bangladesh, Pakistan, India | `karachi` + `hanafi` (the default) |
+| Saudi Arabia | `ummAlQura` + `shafi` |
+| North America | `isna` |
+| Europe | `muslimWorldLeague` |
+| Indonesia | `indonesia` |
+| Turkey | `turkey` |
+
+`IbadahCalculationMethod` covers all 24 methods the API supports.
+
+### Timezones 🕰️
+
+Prayer times are rendered in the **selected city's** timezone, not the device's.
+Pick Toronto while your phone is on Dhaka time and you see Toronto's times, and
+the day rolls over at Toronto's midnight. The countdown to the next prayer
+compares absolute instants, so it is correct in every case.
 
 ### Using fromSeed Constructor
 
@@ -222,15 +297,16 @@ IbadahStrings(
   startIn: 'Start in',
   am: 'AM',
   pm: 'PM',
-  searchHintText: 'Search district',
+  searchHintText: 'Search location',
   retry: 'Retry',
+  locationNotFound: 'Could not find that location',
 )
 ```
 
 ## Refreshing 🔄
 
 The widget fetches prayer times when it first mounts and whenever the user
-picks a different district. On top of that it keeps itself current on its own:
+picks a different location. On top of that it keeps itself current on its own:
 
 - **Automatic retry.** If a fetch fails (typically no internet) the widget
   shows the error with a **Retry** button and retries in the background on a
@@ -284,9 +360,10 @@ ListenableBuilder(
 
 | Member | Type | Description |
 |--------|------|-------------|
-| `refresh()` | `Future<void>` | Refetches the current district. The future completes when the fetch settles (success or failure), so it is safe to `await` from a `RefreshIndicator`. No-op while detached. |
+| `refresh()` | `Future<void>` | Refetches the current location. The future completes when the fetch settles (success or failure), so it is safe to `await` from a `RefreshIndicator`. No-op while detached. |
 | `status` | `IbadahFetchStatus` | `initial`, `loading`, `success` or `failure` |
-| `district` | `String?` | District the widget last fetched for |
+| `location` | `IbadahLocation?` | Location the widget last fetched for |
+| `district` | `String?` | **Deprecated** — the city name only. Use `location`. |
 | `lastUpdated` | `DateTime?` | Time of the last successful fetch; unchanged by a later failure |
 | `errorMessage` | `String?` | Failure reason, or `null` when the last fetch did not fail |
 | `isAttached` | `bool` | Whether a mounted `IbadahWidget` is using this controller |
@@ -308,6 +385,20 @@ The main widget that displays prayer times.
 | ibadahStrings | List<IbadahStrings> | Yes | List of string translations |
 | useGradient | bool | No | Paint `ibadahTheme.backgroundGradient` instead of `backgroundColor` (default `false`) |
 | controller | IbadahController? | No | Handle for triggering a manual refresh and observing fetch state |
+| locations | List\<IbadahLocation\> | No | Places the user can pick between (default: `bangladeshDistricts`) |
+| initialLocation | IbadahLocation? | No | Location shown on first run; must be in `locations` (default: Dhaka if present, else the first entry) |
+| calculationMethod | IbadahCalculationMethod | No | Prayer-time convention (default: `karachi`) |
+| school | IbadahSchool | No | Juristic school for Asr (default: `hanafi`) |
+
+### IbadahLocation
+
+| Property | Type | Description |
+|----------|------|-------------|
+| city | String | City name as the geocoder should receive it |
+| country | String | Country name as the geocoder should receive it |
+| label | String? | Optional display text; does not affect the request |
+| displayName | String | `label` when set, otherwise `city` |
+| address | String | `"<city>,<country>"`, what the API receives |
 
 ### IbadahTheme.fromSeed()
 
@@ -350,6 +441,8 @@ For a complete example, check out the `example` directory.
 - ✅ Basic prayer times display
 - ✅ Multi-language support
 - ✅ Custom theming
+- ✅ Worldwide locations with per-city timezones
+- ✅ Configurable calculation method and school
 - ⬜ Prayer notifications
 - ⬜ Qibla direction
 - ⬜ Hijri calendar integration

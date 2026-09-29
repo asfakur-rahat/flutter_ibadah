@@ -16,6 +16,12 @@ class NextPrayerWidget extends StatefulWidget {
 
   final Function(String) getNextPrayerName;
 
+  /// UTC offset of the city these times belong to.
+  ///
+  /// Only affects how the next prayer's clock time is rendered. The countdown
+  /// itself compares absolute instants, so it is already zone-independent.
+  final Duration? utcOffset;
+
   const NextPrayerWidget({
     super.key,
     required this.salatTimes,
@@ -24,6 +30,7 @@ class NextPrayerWidget extends StatefulWidget {
     required this.supportedLocals,
     required this.currentLocale,
     required this.getNextPrayerName,
+    this.utcOffset,
   });
 
   @override
@@ -169,6 +176,7 @@ class _NextPrayerWidgetState extends State<NextPrayerWidget> {
                           ibadahStrings: widget.ibadahStrings,
                           currentLocale: widget.currentLocale,
                         ).pm,
+                        utcOffset: widget.utcOffset,
                       ),
                       locale: widget.currentLocale,
                     )} )',

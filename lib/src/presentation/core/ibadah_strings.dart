@@ -21,8 +21,9 @@ import 'ibadah_defaults.dart';
 /// // defaultStrings.startIn == 'Start in'
 /// // defaultStrings.am == 'AM'
 /// // defaultStrings.pm == 'PM'
-/// // defaultStrings.searchHintText == 'Search district'
+/// // defaultStrings.searchHintText == 'Search location'
 /// // defaultStrings.retry == 'Retry'
+/// // defaultStrings.locationNotFound == 'Could not find that location'
 /// ```
 class IbadahStrings {
   /// Creates an instance of [IbadahStrings] with customizable string values.
@@ -46,8 +47,9 @@ class IbadahStrings {
   ///   startIn: 'শুরু হবে',
   ///   am: 'সকাল',
   ///   pm: 'বিকাল',
-  ///   searchHintText: 'জেলা খুঁজুন',
+  ///   searchHintText: 'অবস্থান খুঁজুন',
   ///   retry: 'আবার চেষ্টা করুন',
+  ///   locationNotFound: 'অবস্থানটি খুঁজে পাওয়া যায়নি',
   /// );
   /// ```
   const IbadahStrings({
@@ -66,6 +68,7 @@ class IbadahStrings {
     this.pm = pmDefault,
     this.searchHintText = searchHintTextDefault,
     this.retry = retryDefault,
+    this.locationNotFound = locationNotFoundDefault,
   });
 
   /// The app name or title.
@@ -120,11 +123,18 @@ class IbadahStrings {
   /// Default: 'PM'
   final String pm;
 
-  /// Hint text for search input fields.
-  /// Default: 'Search district'
+  /// Hint text for the location search field.
+  /// Default: 'Search location'
   final String searchHintText;
 
   /// Label for the button that retries a failed prayer-time fetch.
   /// Default: 'Retry'
   final String retry;
+
+  /// Shown when the API cannot resolve the selected city and country.
+  ///
+  /// Unlike a network failure, retrying the same address will not help, so
+  /// this asks the user to pick a different one.
+  /// Default: 'Could not find that location'
+  final String locationNotFound;
 }

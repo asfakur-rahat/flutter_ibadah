@@ -4,20 +4,30 @@ This example demonstrates how to use the `flutter_ibadah` package in your Flutte
 
 ## What this example shows
 
-- **Basic Usage**: Simple implementation with light and dark themes
-- **Seed Color Theme**: Creating themes from a seed color with automatic color generation
-- **Custom Theme**: Fully customized theme with specific colors
-- **Multi-language Support**: Switching between English and Bengali
-- **Responsive Design**: Works on different screen sizes
+The demo is split into four tabs, and the app bar toggles theme (light/dark)
+and locale (English / বাংলা / العربية) across all of them.
+
+- **Global** — one `IbadahWidget` over nine cities in nine countries, with a
+  live read-out of every `IbadahController` getter and pull-to-refresh wired to
+  `controller.refresh()`. Pick Toronto while your machine is on Dhaka time and
+  the times stay Toronto's.
+- **Bangladesh** — an `IbadahWidget` with *no* `locations`, `calculationMethod`
+  or `school`, proving the defaults still give the 64 districts, Karachi/Hanafi
+  and Dhaka. Plus a short list using `IbadahLocation.label` for Bangla names.
+- **Calculation** — dropdowns bound to `calculationMethod` and `school`, so you
+  can watch the times move between Karachi, ISNA, Umm al-Qura and the rest.
+- **Theming** — `IbadahTheme.fromSeed()` and a fully custom theme with a
+  gradient background.
 
 ## Features Demonstrated
 
-- Prayer time display for Bangladeshi locations
-- Real-time countdown to next prayer
-- District/location selection
-- Theme switching (light/dark)
-- Language switching (English/Bengali)
-- Multiple theming approaches
+- Prayer times for any city in any country
+- Times rendered in the selected city's timezone, not the device's
+- Real-time countdown to the next prayer
+- Searchable location selection
+- All 24 calculation methods and both Asr schools
+- Theme switching (light/dark) and three theming approaches
+- Language switching, including Arabic-Indic digits
 
 ## Running the Example
 
@@ -45,6 +55,20 @@ IbadahWidget(
   supportedLocals: const ['en', 'bn'],
   ibadahTheme: IbadahTheme.light(),
   ibadahStrings: const [IbadahStrings()],
+)
+```
+
+### Worldwide locations
+```dart
+IbadahWidget(
+  currentLocale: 'en',
+  ibadahTheme: IbadahTheme.light(),
+  locations: const [
+    IbadahLocation(city: 'Mecca', country: 'Saudi Arabia'),
+    IbadahLocation(city: 'Toronto', country: 'Canada'),
+  ],
+  calculationMethod: IbadahCalculationMethod.ummAlQura,
+  school: IbadahSchool.shafi,
 )
 ```
 

@@ -1,0 +1,26 @@
+# NOTE: a .pubignore REPLACES .gitignore for `pub publish` — it does not add to
+# it. Every exclusion we rely on must be restated here, or build output ships
+# to consumers. Keep in sync with .gitignore.
+
+# Build output and tooling caches
+.dart_tool/
+build/
+pubspec.lock
+.fvm/
+.fvmrc
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Editor / IDE
+*.iml
+.idea/
+.vscode/
+
+# Full-resolution screenshots are served to the README from GitHub raw URLs,
+# so they don't need to ship. The downscaled ones in doc/screenshots/ do —
+# pubspec.yaml's `screenshots:` gallery points at them.
+doc/screenshots/raw/
+
+# Internal docs, not shipped to pub.dev consumers.
+CLAUDE.md
+MIGRATION-0.2.md

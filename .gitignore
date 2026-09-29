@@ -29,3 +29,6 @@ migrate_working_dir/
 .flutter-plugins
 .flutter-plugins-dependencies
 build/
+
+# FVM — pins the Flutter version (.fvmrc is committed); the SDK symlink is not.
+.fvm/

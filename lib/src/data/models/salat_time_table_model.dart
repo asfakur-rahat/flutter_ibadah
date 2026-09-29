@@ -14,6 +14,9 @@ class SalatTimeTableModel {
   final DateTime lastthird;
   final bool isFriday;
 
+  /// The selected city's UTC offset, recovered from the ISO8601 response.
+  final Duration utcOffset;
+
   const SalatTimeTableModel({
     required this.fajr,
     required this.sunrise,
@@ -27,10 +30,30 @@ class SalatTimeTableModel {
     required this.firstthird,
     required this.lastthird,
     required this.isFriday,
+    this.utcOffset = Duration.zero,
   });
+
+  /// Reads the UTC offset out of an ISO8601 timestamp such as
+  /// `2026-09-29T05:37:00-04:00`.
+  ///
+  /// This has to happen on the raw string: `DateTime.parse` converts an
+  /// offset-bearing timestamp to UTC and discards the offset, so by the time we
+  /// hold a [DateTime] there is no way to recover which city it belongs to.
+  static Duration parseUtcOffset(String? iso8601) {
+    if (iso8601 == null) return Duration.zero;
+    if (iso8601.endsWith('Z')) return Duration.zero;
+    final match = RegExp(r'([+-])(\d{2}):?(\d{2})$').firstMatch(iso8601.trim());
+    if (match == null) return Duration.zero;
+    final offset = Duration(
+      hours: int.parse(match.group(2)!),
+      minutes: int.parse(match.group(3)!),
+    );
+    return match.group(1) == '-' ? -offset : offset;
+  }
 
   factory SalatTimeTableModel.fromJson(dynamic json, dynamic isFriday) {
     return SalatTimeTableModel(
+      utcOffset: parseUtcOffset(json['Fajr'] as String?),
       fajr: DateTime.parse(json['Fajr']),
       sunrise: DateTime.parse(json['Sunrise']),
       dhuhr: DateTime.parse(json['Dhuhr']),
@@ -59,6 +82,7 @@ class SalatTimeTableModel {
     DateTime? firstthird,
     DateTime? lastthird,
     bool? isFriday,
+    Duration? utcOffset,
   }) {
     return SalatTimeTableModel(
       fajr: fajr ?? this.fajr,
@@ -73,6 +97,7 @@ class SalatTimeTableModel {
       firstthird: firstthird ?? this.firstthird,
       lastthird: lastthird ?? this.lastthird,
       isFriday: isFriday ?? this.isFriday,
+      utcOffset: utcOffset ?? this.utcOffset,
     );
   }
 
@@ -107,6 +132,7 @@ class SalatTimeTableModel {
       firstthird: firstthird,
       lastthird: lastthird,
       isFriday: isFriday,
+      utcOffset: utcOffset,
     );
   }
 }

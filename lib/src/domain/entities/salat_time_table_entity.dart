@@ -14,6 +14,13 @@ class SalatTimeTableEntity extends Equatable {
   final DateTime? lastthird;
   final bool isFriday;
 
+  /// The UTC offset of the city these times belong to.
+  ///
+  /// The prayer [DateTime]s are UTC instants; render them through
+  /// `CommonUtils.inZone` with this offset so they read as the selected city's
+  /// wall clock rather than the device's.
+  final Duration utcOffset;
+
   const SalatTimeTableEntity({
     this.fajr,
     this.sunrise,
@@ -27,6 +34,7 @@ class SalatTimeTableEntity extends Equatable {
     this.firstthird,
     this.lastthird,
     this.isFriday = false,
+    this.utcOffset = Duration.zero,
   });
 
   @override
@@ -43,5 +51,6 @@ class SalatTimeTableEntity extends Equatable {
         firstthird,
         lastthird,
         isFriday,
+        utcOffset,
       ];
 }
